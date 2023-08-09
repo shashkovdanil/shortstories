@@ -6,6 +6,6 @@ const config: CodegenConfig = {
       plugins: ['typescript', 'typescript-resolvers'],
     },
   },
-  schema: 'schema.graphql',
+  schema: './public/schema.graphql',
 }
 export default config
