@@ -1,9 +1,10 @@
-import { startServerAndCreateNextHandler } from '@as-integrations/next'
-import { ApolloServer } from '@apollo/server'
-import { Resolvers } from '@/__generated__/resolvers-types'
 import type { NextRequest } from 'next/server'
-import { PrismaClient } from '@prisma/client'
+
+import { Resolvers } from '@/__generated__/resolvers-types'
 import { schema } from '@/schema'
+import { ApolloServer } from '@apollo/server'
+import { startServerAndCreateNextHandler } from '@as-integrations/next'
+import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
