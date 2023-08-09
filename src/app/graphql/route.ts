@@ -2,27 +2,26 @@ import type { NextRequest } from 'next/server'
 
 import { Resolvers } from '@/__generated__/resolvers-types'
 import { schema } from '@/schema'
+import { type GraphQLContext, createContext } from '@/services/context'
 import { ApolloServer } from '@apollo/server'
 import { startServerAndCreateNextHandler } from '@as-integrations/next'
-import { PrismaClient } from '@prisma/client'
-
-const prisma = new PrismaClient()
 
 const server = new ApolloServer<Resolvers>({
   resolvers: {
     Query: {
-      genres: async () => {
-        const genres = await prisma.genres.findMany()
+      genres: async (parent, args, ctx) => {
+        console.log(ctx)
+        const genres = await ctx.prisma.genres.findMany()
 
         return genres
       },
     },
-  },
+  } as Resolvers<GraphQLContext>,
   typeDefs: schema,
 })
 
 const handler = startServerAndCreateNextHandler<NextRequest>(server, {
-  context: async req => ({ req }),
+  context: async req => createContext({ req }),
 })
 
 export async function GET(request: NextRequest) {
