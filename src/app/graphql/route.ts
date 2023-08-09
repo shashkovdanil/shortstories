@@ -2,12 +2,10 @@ import { startServerAndCreateNextHandler } from '@as-integrations/next'
 import { ApolloServer } from '@apollo/server'
 import { Resolvers } from '@/__generated__/resolvers-types'
 import type { NextRequest } from 'next/server'
-import { readFileSync } from 'node:fs'
 import { PrismaClient } from '@prisma/client'
+import { schema } from '@/schema'
 
 const prisma = new PrismaClient()
-
-const typeDefs = readFileSync('schema.graphql', 'utf8')
 
 const server = new ApolloServer<Resolvers>({
   resolvers: {
@@ -19,7 +17,7 @@ const server = new ApolloServer<Resolvers>({
       },
     },
   },
-  typeDefs,
+  typeDefs: schema,
 })
 
 const handler = startServerAndCreateNextHandler<NextRequest>(server, {
