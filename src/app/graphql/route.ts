@@ -10,7 +10,7 @@ const prisma = new PrismaClient()
 const schemaPath =
   process.env.NODE_ENV === 'development'
     ? './public/schema.graphql'
-    : './schema.graphql'
+    : '/schema.graphql'
 const typeDefs = readFileSync(schemaPath, 'utf8')
 
 const server = new ApolloServer<Resolvers>({
