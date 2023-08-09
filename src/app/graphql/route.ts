@@ -7,7 +7,7 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-const typeDefs = readFileSync('./schema.graphql', 'utf8')
+const typeDefs = readFileSync('schema.graphql', 'utf8')
 
 const server = new ApolloServer<Resolvers>({
   resolvers: {
