@@ -1,0 +1,174 @@
+@import '../../styles/animations/fade-in.css';
+
+.no-comments {
+  color: #222;
+
+  &.dark {
+    color: #b8b8b8;
+  }
+}
+
+.comments {
+  max-width: 700px;
+  padding: 0 24px;
+  margin: 0 auto;
+  margin-top: 12px;
+  border-top: 1px solid #eee;
+
+  .create-comment {
+    display: flex;
+    flex-direction: column;
+
+    > textarea {
+      min-height: 63px;
+      padding: 20px 20px 20px 0;
+      font-size: 1.6rem;
+      line-height: 1.4;
+      color: #222;
+      border: none;
+
+      &.dark {
+        color: #b8b8b8;
+      }
+    }
+  }
+
+  .no-comments {
+    padding: 24px 0;
+  }
+
+  .more-button {
+    width: 100%;
+  }
+}
+
+.list-comments {
+  margin-top: 20px;
+  margin-left: 32px;
+  border-left: 1px dashed #ccc;
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+
+  .comment-header {
+    display: flex;
+    align-items: center;
+  }
+
+  .edit-and-delete {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 46px;
+      height: 46px;
+      padding: 0;
+      transition: background-color 0.2s ease;
+
+      img {
+        width: 16px;
+        height: 16px;
+      }
+
+      &:hover {
+        background-color: #eee;
+      }
+
+      &.dark:hover {
+        background-color: #222;
+      }
+    }
+  }
+
+  .edit-comment {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+
+    > textarea {
+      min-height: 63px;
+      padding: 20px;
+      font-size: 1.6rem;
+      line-height: 1.4;
+      color: #222;
+      border: none;
+
+      &.dark {
+        color: #b8b8b8;
+      }
+    }
+  }
+
+  li {
+    position: relative;
+    padding-top: 15px;
+    padding-left: 20px;
+    overflow: hidden;
+    font-size: 1.6rem;
+    line-height: 1.4;
+    color: #222;
+    opacity: 0;
+    animation: fadeIn 1s ease 0.2s 1 normal forwards running;
+
+    .body {
+      margin-top: 18px;
+      margin-bottom: 18px;
+      line-height: 1.4;
+    }
+
+    &.dark {
+      .body,
+      .reply-textarea,
+      .cancel-button {
+        color: #b8b8b8;
+      }
+    }
+  }
+}
+
+.parent-comments {
+  padding-bottom: 18px;
+  margin-left: -20px;
+  border-left: none;
+}
+
+.reply {
+  font-size: 1.3rem;
+  color: #818181;
+  transition: 0.2s;
+
+  &:hover {
+    color: #6d47d9;
+  }
+}
+
+.reply-textarea {
+  min-height: 63px;
+  padding: 20px 20px 20px 0;
+  font-size: 1.6rem;
+  line-height: 1.4;
+  color: #222;
+  border: none;
+}
+
+.reply-buttons {
+  display: flex;
+
+  .cancel-button {
+    display: block;
+    height: 28px;
+    padding: 0 12px;
+    margin-left: 12px;
+    font-size: 1.2rem;
+    background-color: transparent;
+  }
+}

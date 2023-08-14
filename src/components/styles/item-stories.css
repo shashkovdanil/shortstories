@@ -1,0 +1,137 @@
+.wrapper {
+  height: 600px;
+  padding: 34px;
+  margin-bottom: 24px;
+  overflow: hidden;
+  cursor: pointer;
+  background: #fcfcfc;
+  transform: translateZ(0);
+
+  @media (max-width: 768px) {
+    padding: 20px;
+  }
+}
+
+.author-block .name-with-date .name {
+  font-size: 1.2rem;
+}
+
+.title {
+  margin: 12px 0;
+  margin-top: 12px;
+  margin-bottom: 26px;
+  font-size: 3.2rem;
+
+  @media (max-width: 576px) {
+    font-size: 3rem;
+  }
+}
+
+.body {
+  margin-bottom: 16px;
+  font-size: 1.6rem;
+}
+
+.labels {
+  margin: 12px 0;
+
+  .genre,
+  .length {
+    display: inline-block;
+    padding: 6px 10px;
+    font-size: 1.2rem;
+    color: #fcfcfc;
+    border-radius: 25px;
+  }
+
+  .length {
+    margin-left: 10px;
+  }
+
+  .genre {
+    background-color: #6d47d9;
+  }
+
+  .short {
+    background-color: #0ab7a6;
+  }
+
+  .long {
+    background-color: #edc951;
+  }
+
+  .middle {
+    background-color: #c6a5d8;
+  }
+}
+
+.edit-and-delete {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: flex-end;
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    background-color: #fcfcfc;
+    transition: background-color 0.25s ease-in-out;
+
+    img {
+      width: 16px;
+      height: 16px;
+    }
+
+    &:hover {
+      background-color: #eee;
+    }
+  }
+}
+
+.bottom-bar {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: block;
+  padding-top: 64px;
+  padding-right: 20px;
+  padding-left: 20px;
+  background:
+    linear-gradient(
+      hsla(0, 0%, 100%, 0),
+      hsla(0, 0%, 100%, 0.95),
+      #fff
+    );
+
+  .buttons-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+
+    > div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-left: 16px;
+
+      img {
+        opacity: 0.45;
+        width: 14px;
+        height: 14px;
+        margin-bottom: 1px;
+      }
+
+      span {
+        font-size: 1rem;
+        font-weight: 700;
+        opacity: 0.6;
+      }
+    }
+  }
+}

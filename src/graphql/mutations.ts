@@ -1,18 +1,14 @@
-import gql from 'graphql-tag'
+import { gql } from '@/__generated__/gql'
 
-import { commentFragment, meFragment, storyFragment } from './fragments'
-
-export const UPDATE_ACCOUNT_MUTATION = gql`
+export const UPDATE_ACCOUNT_MUTATION = gql(/* GraphQL */ `
   mutation UPDATE_ACCOUNT_MUTATION($username: String!, $info: String) {
     updateUser(username: $username, info: $info) {
       ...me
     }
   }
+`)
 
-  ${meFragment}
-`
-
-export const POST_PHOTO_MUTATION = gql`
+export const POST_PHOTO_MUTATION = gql(/* GraphQL */ `
   mutation POST_PHOTO_MUTATION(
     $file: Upload!
     $width: Float!
@@ -24,25 +20,23 @@ export const POST_PHOTO_MUTATION = gql`
       photo
     }
   }
-`
+`)
 
-export const CHECK_USER_EXIST_MUTATION = gql`
+export const CHECK_USER_EXIST_MUTATION = gql(/* GraphQL */ `
   mutation CHECK_USER_EXIST_MUTATION($login: String!) {
     checkUserExists(login: $login)
   }
-`
+`)
 
-export const SIGN_IN_MUTATION = gql`
+export const SIGN_IN_MUTATION = gql(/* GraphQL */ `
   mutation SIGN_IN_MUTATION($login: String!, $password: String!) {
     signIn(login: $login, password: $password) {
       ...me
     }
   }
+`)
 
-  ${meFragment}
-`
-
-export const SIGN_UP_MUTATION = gql`
+export const SIGN_UP_MUTATION = gql(/* GraphQL */ `
   mutation SIGN_UP_MUTATION(
     $username: String!
     $email: String!
@@ -52,21 +46,19 @@ export const SIGN_UP_MUTATION = gql`
       ...me
     }
   }
-
-  ${meFragment}
-`
+`)
 
 // Запрос сброса пароля
-export const REQUEST_RESET_MUTATION = gql`
+export const REQUEST_RESET_MUTATION = gql(/* GraphQL */ `
   mutation REQUEST_RESET_MUTATION($login: String!) {
     requestReset(login: $login) {
       email
     }
   }
-`
+`)
 
 // Сброс пароля
-export const RESET_PASSWORD_MUTATION = gql`
+export const RESET_PASSWORD_MUTATION = gql(/* GraphQL */ `
   mutation RESET_PASSWORD_MUTATION(
     $token: String!
     $password: String!
@@ -80,29 +72,25 @@ export const RESET_PASSWORD_MUTATION = gql`
       ...me
     }
   }
+`)
 
-  ${meFragment}
-`
-
-export const VERIFY_MUTATION = gql`
+export const VERIFY_MUTATION = gql(/* GraphQL */ `
   mutation VERIFY_MUTATION($token: String!) {
     verifyUser(token: $token) {
       ...me
     }
   }
+`)
 
-  ${meFragment}
-`
-
-export const SIGN_OUT_MUTATION = gql`
+export const SIGN_OUT_MUTATION = gql(/* GraphQL */ `
   mutation SIGN_OUT_MUTATION {
     signOut {
       message
     }
   }
-`
+`)
 
-export const LIKE_MUTATION = gql`
+export const LIKE_MUTATION = gql(/* GraphQL */ `
   mutation LIKE_MUTATION($id: Int!) {
     likeStory(id: $id) {
       id
@@ -111,9 +99,9 @@ export const LIKE_MUTATION = gql`
       storyId
     }
   }
-`
+`)
 
-export const DISLIKE_MUTATION = gql`
+export const DISLIKE_MUTATION = gql(/* GraphQL */ `
   mutation DISLIKE_MUTATION($id: Int!) {
     dislikeStory(id: $id) {
       id
@@ -122,9 +110,9 @@ export const DISLIKE_MUTATION = gql`
       storyId
     }
   }
-`
+`)
 
-export const CREATE_STORY_MUTATION = gql`
+export const CREATE_STORY_MUTATION = gql(/* GraphQL */ `
   mutation CREATE_STORY_MUTATION(
     $title: String!
     $body: String!
@@ -134,11 +122,9 @@ export const CREATE_STORY_MUTATION = gql`
       ...story
     }
   }
+`)
 
-  ${storyFragment}
-`
-
-export const EDIT_STORY_MUTATION = gql`
+export const EDIT_STORY_MUTATION = gql(/* GraphQL */ `
   mutation EDIT_STORY_MUTATION(
     $id: Int!
     $body: String!
@@ -151,17 +137,17 @@ export const EDIT_STORY_MUTATION = gql`
       body
     }
   }
-`
+`)
 
-export const DELETE_STORY_MUTATION = gql`
+export const DELETE_STORY_MUTATION = gql(/* GraphQL */ `
   mutation DELETE_STORY_MUTATION($id: Int!) {
     deleteStory(id: $id) {
       id
     }
   }
-`
+`)
 
-export const VIEW_STORY_MUTATION = gql`
+export const VIEW_STORY_MUTATION = gql(/* GraphQL */ `
   mutation VIEW_STORY_MUTATION($id: Int!) {
     viewStory(id: $id) {
       id
@@ -169,19 +155,17 @@ export const VIEW_STORY_MUTATION = gql`
       storyId
     }
   }
-`
+`)
 
-export const CREATE_COMMENT_MUTATION = gql`
+export const CREATE_COMMENT_MUTATION = gql(/* GraphQL */ `
   mutation CREATE_COMMENT_MUTATION($id: Int!, $body: String!, $commentId: Int) {
     createComment(id: $id, body: $body, commentId: $commentId) {
       ...comment
     }
   }
+`)
 
-  ${commentFragment}
-`
-
-export const DELETE_COMMENT_MUTATION = gql`
+export const DELETE_COMMENT_MUTATION = gql(/* GraphQL */ `
   mutation DELETE_COMMENT_MUTATION(
     $id: Int!
     $hasChildren: Boolean!
@@ -191,14 +175,12 @@ export const DELETE_COMMENT_MUTATION = gql`
       id
     }
   }
-`
+`)
 
-export const UPDATE_COMMENT_MUTATION = gql`
+export const UPDATE_COMMENT_MUTATION = gql(/* GraphQL */ `
   mutation UPDATE_COMMENT_MUTATION($id: Int!, $body: String!) {
     updateComment(id: $id, body: $body) {
       ...comment
     }
   }
-
-  ${commentFragment}
-`
+`)

@@ -287,26 +287,17 @@ export type View = {
   userId?: Maybe<Scalars['Int']['output']>;
 };
 
-export type MeFragment = { __typename?: 'Me', id: number, username: string, email: string, isVerified: boolean, photo?: string | null, info?: string | null } & { ' $fragmentName'?: 'MeFragment' };
+export type MeFragment = { __typename?: 'Me', id: number, username: string, email: string, isVerified: boolean, photo?: string | null, info?: string | null };
 
-export type UserFragment = { __typename?: 'User', id: number, username: string, photo?: string | null, info?: string | null } & { ' $fragmentName'?: 'UserFragment' };
+export type UserFragment = { __typename?: 'User', id: number, username: string, photo?: string | null, info?: string | null };
 
-export type StoryFragment = { __typename?: 'Story', id: number, title: string, body: string, length: number, createdAt: any, genre?: { __typename?: 'Genre', id: number, name: string } | null, user: (
-    { __typename?: 'User' }
-    & { ' $fragmentRefs'?: { 'UserFragment': UserFragment } }
-  ), stats: { __typename?: 'Stats', comments: number, likes: Array<{ __typename?: 'User', id: number }>, dislikes: Array<{ __typename?: 'User', id: number }>, views: Array<{ __typename?: 'User', id: number } | null> } } & { ' $fragmentName'?: 'StoryFragment' };
+export type StoryFragment = { __typename?: 'Story', id: number, title: string, body: string, length: number, createdAt: any, genre?: { __typename?: 'Genre', id: number, name: string } | null, user: { __typename?: 'User', id: number, username: string, photo?: string | null, info?: string | null }, stats: { __typename?: 'Stats', comments: number, likes: Array<{ __typename?: 'User', id: number }>, dislikes: Array<{ __typename?: 'User', id: number }>, views: Array<{ __typename?: 'User', id: number } | null> } };
 
-export type StoriesFragment = { __typename?: 'StoryConnection', edges: Array<(
-    { __typename?: 'Story' }
-    & { ' $fragmentRefs'?: { 'StoryFragment': StoryFragment } }
-  ) | null>, pageInfo: { __typename?: 'PageInfoStories', offset: number, limit: number } } & { ' $fragmentName'?: 'StoriesFragment' };
+export type StoriesFragment = { __typename?: 'StoryConnection', edges: Array<{ __typename?: 'Story', id: number, title: string, body: string, length: number, createdAt: any, genre?: { __typename?: 'Genre', id: number, name: string } | null, user: { __typename?: 'User', id: number, username: string, photo?: string | null, info?: string | null }, stats: { __typename?: 'Stats', comments: number, likes: Array<{ __typename?: 'User', id: number }>, dislikes: Array<{ __typename?: 'User', id: number }>, views: Array<{ __typename?: 'User', id: number } | null> } } | null>, pageInfo: { __typename?: 'PageInfoStories', offset: number, limit: number } };
 
-export type ReactionFragment = { __typename?: 'Reaction', id: number, state: string, userId: number, storyId: number } & { ' $fragmentName'?: 'ReactionFragment' };
+export type ReactionFragment = { __typename?: 'Reaction', id: number, state: string, userId: number, storyId: number };
 
-export type CommentFragment = { __typename?: 'Comment', id: number, body?: string | null, commentId?: number | null, createdAt: any, user: (
-    { __typename?: 'User' }
-    & { ' $fragmentRefs'?: { 'UserFragment': UserFragment } }
-  ) } & { ' $fragmentName'?: 'CommentFragment' };
+export type CommentFragment = { __typename?: 'Comment', id: number, body?: string | null, commentId?: number | null, createdAt: any, user: { __typename?: 'User', id: number, username: string, photo?: string | null, info?: string | null } };
 
 export type Update_Account_MutationMutationVariables = Exact<{
   username: Scalars['String']['input'];
@@ -314,10 +305,7 @@ export type Update_Account_MutationMutationVariables = Exact<{
 }>;
 
 
-export type Update_Account_MutationMutation = { __typename?: 'Mutation', updateUser: (
-    { __typename?: 'Me' }
-    & { ' $fragmentRefs'?: { 'MeFragment': MeFragment } }
-  ) };
+export type Update_Account_MutationMutation = { __typename?: 'Mutation', updateUser: { __typename?: 'Me', id: number, username: string, email: string, isVerified: boolean, photo?: string | null, info?: string | null } };
 
 export type Post_Photo_MutationMutationVariables = Exact<{
   file: Scalars['Upload']['input'];
@@ -343,10 +331,7 @@ export type Sign_In_MutationMutationVariables = Exact<{
 }>;
 
 
-export type Sign_In_MutationMutation = { __typename?: 'Mutation', signIn: (
-    { __typename?: 'Me' }
-    & { ' $fragmentRefs'?: { 'MeFragment': MeFragment } }
-  ) };
+export type Sign_In_MutationMutation = { __typename?: 'Mutation', signIn: { __typename?: 'Me', id: number, username: string, email: string, isVerified: boolean, photo?: string | null, info?: string | null } };
 
 export type Sign_Up_MutationMutationVariables = Exact<{
   username: Scalars['String']['input'];
@@ -355,10 +340,7 @@ export type Sign_Up_MutationMutationVariables = Exact<{
 }>;
 
 
-export type Sign_Up_MutationMutation = { __typename?: 'Mutation', signUp: (
-    { __typename?: 'Me' }
-    & { ' $fragmentRefs'?: { 'MeFragment': MeFragment } }
-  ) };
+export type Sign_Up_MutationMutation = { __typename?: 'Mutation', signUp: { __typename?: 'Me', id: number, username: string, email: string, isVerified: boolean, photo?: string | null, info?: string | null } };
 
 export type Request_Reset_MutationMutationVariables = Exact<{
   login: Scalars['String']['input'];
@@ -374,20 +356,14 @@ export type Reset_Password_MutationMutationVariables = Exact<{
 }>;
 
 
-export type Reset_Password_MutationMutation = { __typename?: 'Mutation', resetPassword: (
-    { __typename?: 'Me' }
-    & { ' $fragmentRefs'?: { 'MeFragment': MeFragment } }
-  ) };
+export type Reset_Password_MutationMutation = { __typename?: 'Mutation', resetPassword: { __typename?: 'Me', id: number, username: string, email: string, isVerified: boolean, photo?: string | null, info?: string | null } };
 
 export type Verify_MutationMutationVariables = Exact<{
   token: Scalars['String']['input'];
 }>;
 
 
-export type Verify_MutationMutation = { __typename?: 'Mutation', verifyUser: (
-    { __typename?: 'Me' }
-    & { ' $fragmentRefs'?: { 'MeFragment': MeFragment } }
-  ) };
+export type Verify_MutationMutation = { __typename?: 'Mutation', verifyUser: { __typename?: 'Me', id: number, username: string, email: string, isVerified: boolean, photo?: string | null, info?: string | null } };
 
 export type Sign_Out_MutationMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -415,10 +391,7 @@ export type Create_Story_MutationMutationVariables = Exact<{
 }>;
 
 
-export type Create_Story_MutationMutation = { __typename?: 'Mutation', createStory: (
-    { __typename?: 'Story' }
-    & { ' $fragmentRefs'?: { 'StoryFragment': StoryFragment } }
-  ) };
+export type Create_Story_MutationMutation = { __typename?: 'Mutation', createStory: { __typename?: 'Story', id: number, title: string, body: string, length: number, createdAt: any, genre?: { __typename?: 'Genre', id: number, name: string } | null, user: { __typename?: 'User', id: number, username: string, photo?: string | null, info?: string | null }, stats: { __typename?: 'Stats', comments: number, likes: Array<{ __typename?: 'User', id: number }>, dislikes: Array<{ __typename?: 'User', id: number }>, views: Array<{ __typename?: 'User', id: number } | null> } } };
 
 export type Edit_Story_MutationMutationVariables = Exact<{
   id: Scalars['Int']['input'];
@@ -451,10 +424,7 @@ export type Create_Comment_MutationMutationVariables = Exact<{
 }>;
 
 
-export type Create_Comment_MutationMutation = { __typename?: 'Mutation', createComment: (
-    { __typename?: 'Comment' }
-    & { ' $fragmentRefs'?: { 'CommentFragment': CommentFragment } }
-  ) };
+export type Create_Comment_MutationMutation = { __typename?: 'Mutation', createComment: { __typename?: 'Comment', id: number, body?: string | null, commentId?: number | null, createdAt: any, user: { __typename?: 'User', id: number, username: string, photo?: string | null, info?: string | null } } };
 
 export type Delete_Comment_MutationMutationVariables = Exact<{
   id: Scalars['Int']['input'];
@@ -471,18 +441,12 @@ export type Update_Comment_MutationMutationVariables = Exact<{
 }>;
 
 
-export type Update_Comment_MutationMutation = { __typename?: 'Mutation', updateComment: (
-    { __typename?: 'Comment' }
-    & { ' $fragmentRefs'?: { 'CommentFragment': CommentFragment } }
-  ) };
+export type Update_Comment_MutationMutation = { __typename?: 'Mutation', updateComment: { __typename?: 'Comment', id: number, body?: string | null, commentId?: number | null, createdAt: any, user: { __typename?: 'User', id: number, username: string, photo?: string | null, info?: string | null } } };
 
 export type Only_Me_QueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type Only_Me_QueryQuery = { __typename?: 'Query', me?: (
-    { __typename?: 'Me' }
-    & { ' $fragmentRefs'?: { 'MeFragment': MeFragment } }
-  ) | null };
+export type Only_Me_QueryQuery = { __typename?: 'Query', me?: { __typename?: 'Me', id: number, username: string, email: string, isVerified: boolean, photo?: string | null, info?: string | null } | null };
 
 export type Index_QueryQueryVariables = Exact<{
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -497,13 +461,7 @@ export type Index_QueryQueryVariables = Exact<{
 }>;
 
 
-export type Index_QueryQuery = { __typename?: 'Query', me?: (
-    { __typename?: 'Me' }
-    & { ' $fragmentRefs'?: { 'MeFragment': MeFragment } }
-  ) | null, stories: (
-    { __typename?: 'StoryConnection' }
-    & { ' $fragmentRefs'?: { 'StoriesFragment': StoriesFragment } }
-  ), genres?: Array<{ __typename?: 'Genre', id: number, name: string } | null> | null };
+export type Index_QueryQuery = { __typename?: 'Query', me?: { __typename?: 'Me', id: number, username: string, email: string, isVerified: boolean, photo?: string | null, info?: string | null } | null, stories: { __typename?: 'StoryConnection', edges: Array<{ __typename?: 'Story', id: number, title: string, body: string, length: number, createdAt: any, genre?: { __typename?: 'Genre', id: number, name: string } | null, user: { __typename?: 'User', id: number, username: string, photo?: string | null, info?: string | null }, stats: { __typename?: 'Stats', comments: number, likes: Array<{ __typename?: 'User', id: number }>, dislikes: Array<{ __typename?: 'User', id: number }>, views: Array<{ __typename?: 'User', id: number } | null> } } | null>, pageInfo: { __typename?: 'PageInfoStories', offset: number, limit: number } }, genres?: Array<{ __typename?: 'Genre', id: number, name: string } | null> | null };
 
 export type Me_QueryQueryVariables = Exact<{
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -512,26 +470,14 @@ export type Me_QueryQueryVariables = Exact<{
 }>;
 
 
-export type Me_QueryQuery = { __typename?: 'Query', me?: (
-    { __typename?: 'Me' }
-    & { ' $fragmentRefs'?: { 'MeFragment': MeFragment } }
-  ) | null, writtenStories: (
-    { __typename?: 'StoryConnection' }
-    & { ' $fragmentRefs'?: { 'StoriesFragment': StoriesFragment } }
-  ), favStories: (
-    { __typename?: 'StoryConnection' }
-    & { ' $fragmentRefs'?: { 'StoriesFragment': StoriesFragment } }
-  ) };
+export type Me_QueryQuery = { __typename?: 'Query', me?: { __typename?: 'Me', id: number, username: string, email: string, isVerified: boolean, photo?: string | null, info?: string | null } | null, writtenStories: { __typename?: 'StoryConnection', edges: Array<{ __typename?: 'Story', id: number, title: string, body: string, length: number, createdAt: any, genre?: { __typename?: 'Genre', id: number, name: string } | null, user: { __typename?: 'User', id: number, username: string, photo?: string | null, info?: string | null }, stats: { __typename?: 'Stats', comments: number, likes: Array<{ __typename?: 'User', id: number }>, dislikes: Array<{ __typename?: 'User', id: number }>, views: Array<{ __typename?: 'User', id: number } | null> } } | null>, pageInfo: { __typename?: 'PageInfoStories', offset: number, limit: number } }, favStories: { __typename?: 'StoryConnection', edges: Array<{ __typename?: 'Story', id: number, title: string, body: string, length: number, createdAt: any, genre?: { __typename?: 'Genre', id: number, name: string } | null, user: { __typename?: 'User', id: number, username: string, photo?: string | null, info?: string | null }, stats: { __typename?: 'Stats', comments: number, likes: Array<{ __typename?: 'User', id: number }>, dislikes: Array<{ __typename?: 'User', id: number }>, views: Array<{ __typename?: 'User', id: number } | null> } } | null>, pageInfo: { __typename?: 'PageInfoStories', offset: number, limit: number } } };
 
 export type Edit_Story_QueryQueryVariables = Exact<{
   id: Scalars['Int']['input'];
 }>;
 
 
-export type Edit_Story_QueryQuery = { __typename?: 'Query', story: (
-    { __typename?: 'Story' }
-    & { ' $fragmentRefs'?: { 'StoryFragment': StoryFragment } }
-  ), genres?: Array<{ __typename?: 'Genre', id: number, name: string } | null> | null };
+export type Edit_Story_QueryQuery = { __typename?: 'Query', story: { __typename?: 'Story', id: number, title: string, body: string, length: number, createdAt: any, genre?: { __typename?: 'Genre', id: number, name: string } | null, user: { __typename?: 'User', id: number, username: string, photo?: string | null, info?: string | null }, stats: { __typename?: 'Stats', comments: number, likes: Array<{ __typename?: 'User', id: number }>, dislikes: Array<{ __typename?: 'User', id: number }>, views: Array<{ __typename?: 'User', id: number } | null> } }, genres?: Array<{ __typename?: 'Genre', id: number, name: string } | null> | null };
 
 export type User_QueryQueryVariables = Exact<{
   id: Scalars['Int']['input'];
@@ -540,32 +486,14 @@ export type User_QueryQueryVariables = Exact<{
 }>;
 
 
-export type User_QueryQuery = { __typename?: 'Query', me?: (
-    { __typename?: 'Me' }
-    & { ' $fragmentRefs'?: { 'MeFragment': MeFragment } }
-  ) | null, user?: (
-    { __typename?: 'User' }
-    & { ' $fragmentRefs'?: { 'UserFragment': UserFragment } }
-  ) | null, stories: (
-    { __typename?: 'StoryConnection' }
-    & { ' $fragmentRefs'?: { 'StoriesFragment': StoriesFragment } }
-  ) };
+export type User_QueryQuery = { __typename?: 'Query', me?: { __typename?: 'Me', id: number, username: string, email: string, isVerified: boolean, photo?: string | null, info?: string | null } | null, user?: { __typename?: 'User', id: number, username: string, photo?: string | null, info?: string | null } | null, stories: { __typename?: 'StoryConnection', edges: Array<{ __typename?: 'Story', id: number, title: string, body: string, length: number, createdAt: any, genre?: { __typename?: 'Genre', id: number, name: string } | null, user: { __typename?: 'User', id: number, username: string, photo?: string | null, info?: string | null }, stats: { __typename?: 'Stats', comments: number, likes: Array<{ __typename?: 'User', id: number }>, dislikes: Array<{ __typename?: 'User', id: number }>, views: Array<{ __typename?: 'User', id: number } | null> } } | null>, pageInfo: { __typename?: 'PageInfoStories', offset: number, limit: number } } };
 
 export type Story_QueryQueryVariables = Exact<{
   id: Scalars['Int']['input'];
 }>;
 
 
-export type Story_QueryQuery = { __typename?: 'Query', me?: (
-    { __typename?: 'Me' }
-    & { ' $fragmentRefs'?: { 'MeFragment': MeFragment } }
-  ) | null, story: (
-    { __typename?: 'Story' }
-    & { ' $fragmentRefs'?: { 'StoryFragment': StoryFragment } }
-  ), comments: Array<(
-    { __typename?: 'Comment' }
-    & { ' $fragmentRefs'?: { 'CommentFragment': CommentFragment } }
-  )> };
+export type Story_QueryQuery = { __typename?: 'Query', me?: { __typename?: 'Me', id: number, username: string, email: string, isVerified: boolean, photo?: string | null, info?: string | null } | null, story: { __typename?: 'Story', id: number, title: string, body: string, length: number, createdAt: any, genre?: { __typename?: 'Genre', id: number, name: string } | null, user: { __typename?: 'User', id: number, username: string, photo?: string | null, info?: string | null }, stats: { __typename?: 'Stats', comments: number, likes: Array<{ __typename?: 'User', id: number }>, dislikes: Array<{ __typename?: 'User', id: number }>, views: Array<{ __typename?: 'User', id: number } | null> } }, comments: Array<{ __typename?: 'Comment', id: number, body?: string | null, commentId?: number | null, createdAt: any, user: { __typename?: 'User', id: number, username: string, photo?: string | null, info?: string | null } }> };
 
 export type Genres_QueryQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -575,10 +503,7 @@ export type Genres_QueryQuery = { __typename?: 'Query', genres?: Array<{ __typen
 export type Check_Logged_In_QueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type Check_Logged_In_QueryQuery = { __typename?: 'Query', me?: (
-    { __typename?: 'Me' }
-    & { ' $fragmentRefs'?: { 'MeFragment': MeFragment } }
-  ) | null };
+export type Check_Logged_In_QueryQuery = { __typename?: 'Query', me?: { __typename?: 'Me', id: number, username: string, email: string, isVerified: boolean, photo?: string | null, info?: string | null } | null };
 
 export const MeFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"me"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Me"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"isVerified"}},{"kind":"Field","name":{"kind":"Name","value":"photo"}},{"kind":"Field","name":{"kind":"Name","value":"info"}}]}}]} as unknown as DocumentNode<MeFragment, unknown>;
 export const UserFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"user"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"photo"}},{"kind":"Field","name":{"kind":"Name","value":"info"}}]}}]} as unknown as DocumentNode<UserFragment, unknown>;

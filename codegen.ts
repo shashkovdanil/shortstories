@@ -7,6 +7,7 @@ const config: CodegenConfig = {
       plugins: ['typescript'],
       preset: 'client',
       presetConfig: {
+        fragmentMasking: false,
         gqlTagName: 'gql',
       },
     },
