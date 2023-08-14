@@ -1,6 +1,7 @@
-import React from 'react'
 import cn from 'classnames'
-import styles from './styles/loader.css'
+import React from 'react'
+
+import styles from './styles/loader.module.css'
 
 function Loader({ className = '' }) {
   return (

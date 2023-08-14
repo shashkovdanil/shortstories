@@ -1,34 +1,35 @@
-import React from 'react'
 import cn from 'classnames'
+import React from 'react'
+
 import Loader from './loader'
-import styles from './styles/button.css'
+import styles from './styles/button.module.css'
 
 function Button({
   black,
-  violet,
-  className = '',
   children,
-  onClick,
-  type = 'button',
+  className = '',
   disabled = false,
   loading = false,
+  onClick,
   style = {},
+  type = 'button',
+  violet,
 }) {
   return (
     <button
-      style={style}
-      onClick={onClick}
-      disabled={disabled || loading}
-      type={type}
       className={cn(
         styles.button,
         {
           [styles.black]: black,
-          [styles.violet]: violet,
           [styles.loading]: loading,
+          [styles.violet]: violet,
         },
         className,
       )}
+      disabled={disabled || loading}
+      onClick={onClick}
+      style={style}
+      type={type}
     >
       {loading ? <Loader /> : children}
     </button>

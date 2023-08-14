@@ -1,6 +1,7 @@
-import React from 'react'
 import cn from 'classnames'
-import styles from './styles/center-wrapper.css'
+import React from 'react'
+
+import styles from './styles/center-wrapper.module.css'
 
 function CenterWrapper({ children, className = '' }) {
   return (

@@ -1,46 +1,47 @@
-import React from 'react'
-import Router from 'next/router'
-import Head from 'next/head'
 import cn from 'classnames'
-import { Query, Mutation } from 'react-apollo'
+import Head from 'next/head'
+import Router from 'next/router'
+import React from 'react'
+import { Mutation, Query } from 'react-apollo'
+import { Field, Form } from 'react-final-form'
 import ReactTextareaAutosize from 'react-textarea-autosize'
-import { Form, Field } from 'react-final-form'
-import withDarkMode from '../hoc/with-dark-mode'
-import { GenreSelect, ErrorMessage, Button } from '.'
-import { GENRES_QUERY, USER_QUERY } from '../lib/queries'
-import { CREATE_STORY_MUTATION } from '../lib/mutations'
-import { isEmpty, storyLength, withoutGenre } from '../lib/validators'
-import styles from './styles/story-creator.css'
-import storyStyles from './styles/story.css'
 
-function StoryCreator({ mode, userId, theme }) {
+import { Button, ErrorMessage, GenreSelect } from '.'
+import withDarkMode from '../hoc/with-dark-mode'
+import { CREATE_STORY_MUTATION } from '../lib/mutations'
+import { GENRES_QUERY, USER_QUERY } from '../lib/queries'
+import { isEmpty, storyLength, withoutGenre } from '../lib/validators'
+import storyStyles from './styles/story.module.css'
+import styles from './styles/story-creator.module.css'
+
+function StoryCreator({ mode, theme, userId }) {
   return (
     <Query query={GENRES_QUERY}>
       {({ data }) => {
         const { genres = [] } = data
         return (
           <Mutation
-            mutation={CREATE_STORY_MUTATION}
             refetchQueries={[
               'INDEX_QUERY',
               'ME_QUERY',
               { query: USER_QUERY, variables: { id: userId } },
             ]}
             awaitRefetchQueries
+            mutation={CREATE_STORY_MUTATION}
           >
-            {(createStory, { loading, error }) => (
+            {(createStory, { error, loading }) => (
               <Form
                 onSubmit={async values => {
                   await createStory({
                     variables: {
-                      title: values.title,
                       body: values.body,
                       genreId: values.genre.id,
+                      title: values.title,
                     },
                   })
                   Router.push('/')
                 }}
-                render={({ handleSubmit, form, submitting }) => (
+                render={({ form, handleSubmit, submitting }) => (
                   <div
                     className={cn(styles.wrapper, {
                       [styles.dark]: mode === 'dark',
@@ -49,36 +50,36 @@ function StoryCreator({ mode, userId, theme }) {
                     <Head>
                       <title>Shortstories - написать рассказ</title>
                       <meta
+                        content="Shortstories - написать рассказ"
                         name="title"
-                        content="Shortstories - написать рассказ"
                       />
                       <meta
+                        content="Shortstories - написать рассказ"
                         name="description"
-                        content="Shortstories - написать рассказ"
                       />
                       <meta
+                        content="Shortstories - написать рассказ"
                         property="og:site_name"
-                        content="Shortstories - написать рассказ"
                       />
                       <meta
+                        content="Shortstories - написать рассказ"
                         property="og:title"
-                        content="Shortstories - написать рассказ"
                       />
                       <meta
+                        content="Shortstories - написать рассказ"
                         property="og:description"
-                        content="Shortstories - написать рассказ"
                       />
                       <meta
+                        content="Shortstories - написать рассказ"
                         name="twitter:title"
-                        content="Shortstories - написать рассказ"
                       />
                       <meta
+                        content="Shortstories - написать рассказ"
                         name="twitter:text:title"
-                        content="Shortstories - написать рассказ"
                       />
                       <meta
-                        name="twitter:description"
                         content="Shortstories - написать рассказ"
+                        name="twitter:description"
                       />
                     </Head>
                     <form
@@ -102,11 +103,11 @@ function StoryCreator({ mode, userId, theme }) {
                               {...input}
                               autoCapitalize="true"
                               autoComplete="new-password"
+                              id="title"
+                              name="title"
+                              onChange={input.onChange}
                               placeholder="Заголовок"
                               type="text"
-                              name="title"
-                              id="title"
-                              onChange={input.onChange}
                             />
                             {meta.error && meta.touched && (
                               <span className={storyStyles['error-message']}>
@@ -120,12 +121,12 @@ function StoryCreator({ mode, userId, theme }) {
                         {({ input, meta }) => (
                           <div className={storyStyles.genres}>
                             <GenreSelect
-                              input={input}
-                              isDarkMode={mode === 'dark'}
-                              items={genres}
                               onSelect={genre => {
                                 form.change('genre', genre)
                               }}
+                              input={input}
+                              isDarkMode={mode === 'dark'}
+                              items={genres}
                             />
                             {meta.error && meta.touched && (
                               <span className={storyStyles['error-message']}>
@@ -140,11 +141,11 @@ function StoryCreator({ mode, userId, theme }) {
                           <div className={storyStyles.body}>
                             <ReactTextareaAutosize
                               {...input}
-                              placeholder="Расскажите историю..."
-                              name="body"
                               id="body"
                               maxLength={40000}
+                              name="body"
                               onChange={input.onChange}
+                              placeholder="Расскажите историю..."
                             />
                             {meta.error && meta.touched && (
                               <span className={storyStyles['error-message']}>
@@ -156,8 +157,8 @@ function StoryCreator({ mode, userId, theme }) {
                       </Field>
                       <Button
                         black
-                        loading={loading}
                         disabled={submitting}
+                        loading={loading}
                         type="submit"
                       >
                         Опубликовать

@@ -1,48 +1,49 @@
-import React from 'react'
-import Router from 'next/router'
 import cn from 'classnames'
+import Router from 'next/router'
+import React from 'react'
 import { Mutation } from 'react-apollo'
+import { Field, Form } from 'react-final-form'
 import ReactTextareaAutosize from 'react-textarea-autosize'
-import { Form, Field } from 'react-final-form'
-import withDarkMode from '../hoc/with-dark-mode'
-import { GenreSelect, ErrorMessage, Button } from '.'
-import { USER_QUERY } from '../../src/lib/queries'
-import { EDIT_STORY_MUTATION } from '../../src/lib/mutations'
-import { isEmpty, storyLength, withoutGenre } from '../../src/lib/validators'
-import styles from './styles/story-editor.css'
-import storyStyles from './styles/story.css'
 
-function StoryEditor({ mode, id, userId, story, theme, genres }) {
+import { Button, ErrorMessage, GenreSelect } from '.'
+import { EDIT_STORY_MUTATION } from '../../src/lib/mutations'
+import { USER_QUERY } from '../../src/lib/queries'
+import { isEmpty, storyLength, withoutGenre } from '../../src/lib/validators'
+import withDarkMode from '../hoc/with-dark-mode'
+import storyStyles from './styles/story.module.css'
+import styles from './styles/story-editor.module.css'
+
+function StoryEditor({ genres, id, mode, story, theme, userId }) {
   console.log(story)
   return (
     <Mutation
-      mutation={EDIT_STORY_MUTATION}
       refetchQueries={[
         'INDEX_QUERY',
         'ME_QUERY',
         { query: USER_QUERY, variables: { id: userId } },
       ]}
       awaitRefetchQueries
+      mutation={EDIT_STORY_MUTATION}
     >
-      {(editStory, { loading, error }) => (
+      {(editStory, { error, loading }) => (
         <Form
           initialValues={{
-            title: story.title,
             body: story.body,
             genre: story.genre,
+            title: story.title,
           }}
           onSubmit={async values => {
             await editStory({
               variables: {
-                title: values.title,
                 body: values.body,
                 genreId: values.genre.id,
                 id,
+                title: values.title,
               },
             })
             Router.push('/me')
           }}
-          render={({ handleSubmit, form, submitting }) => (
+          render={({ form, handleSubmit, submitting }) => (
             <div
               className={cn(styles.wrapper, {
                 [styles.dark]: mode === 'dark',
@@ -65,10 +66,10 @@ function StoryEditor({ mode, id, userId, story, theme, genres }) {
                         {...input}
                         autoCapitalize="true"
                         autoComplete="new-password"
+                        id="title"
+                        name="title"
                         placeholder="Заголовок"
                         type="text"
-                        name="title"
-                        id="title"
                       />
                       {meta.error && meta.touched && (
                         <span className={storyStyles['error-message']}>
@@ -82,12 +83,12 @@ function StoryEditor({ mode, id, userId, story, theme, genres }) {
                   {({ input, meta }) => (
                     <div className={storyStyles.genres}>
                       <GenreSelect
-                        input={input}
-                        isDarkMode={mode === 'dark'}
-                        items={genres}
                         onSelect={genre => {
                           form.change('genre', genre)
                         }}
+                        input={input}
+                        isDarkMode={mode === 'dark'}
+                        items={genres}
                       />
                       {meta.error && meta.touched && (
                         <span className={storyStyles['error-message']}>
@@ -102,10 +103,10 @@ function StoryEditor({ mode, id, userId, story, theme, genres }) {
                     <div className={storyStyles.body}>
                       <ReactTextareaAutosize
                         {...input}
-                        placeholder="Расскажите историю..."
-                        name="body"
                         id="body"
                         maxLength={40000}
+                        name="body"
+                        placeholder="Расскажите историю..."
                       />
                       {meta.error && meta.touched && (
                         <span className={storyStyles['error-message']}>
@@ -117,8 +118,8 @@ function StoryEditor({ mode, id, userId, story, theme, genres }) {
                 </Field>
                 <Button
                   black
-                  loading={loading}
                   disabled={submitting}
+                  loading={loading}
                   type="submit"
                 >
                   Редактировать

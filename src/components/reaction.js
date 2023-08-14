@@ -3,7 +3,7 @@ import { DISLIKE_MUTATION, LIKE_MUTATION } from '@/graphql/mutations'
 import cn from 'classnames'
 import React from 'react'
 
-import styles from './styles/reaction.css'
+import styles from './styles/reaction.module.css'
 
 function Reaction({ active, dark, id, qty, state }) {
   function getIcon() {

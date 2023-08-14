@@ -18,8 +18,8 @@ import {
 } from '../../src/lib/validators'
 import { meFragment } from '../lib/fragments'
 import DebouncingValidatingField from './debouncing-validating-field'
-import authFormStyles from './styles/auth-form.css'
-import styles from './styles/signup-form.css'
+import authFormStyles from './styles/auth-form.module.css'
+import styles from './styles/signup-form.module.css'
 
 const Composed = adopt({
   checkUserExistMutation: ({ render }) => (

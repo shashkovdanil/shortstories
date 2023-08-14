@@ -1,16 +1,17 @@
-import React from 'react'
 import cn from 'classnames'
+import React from 'react'
 import { Mutation } from 'react-apollo'
-import { Form, Field } from 'react-final-form'
+import { Field, Form } from 'react-final-form'
 import Textarea from 'react-textarea-autosize'
-import EditPhoto from './edit-photo'
+
 import { meFragment } from '../lib/fragments'
-import {
-  UPDATE_ACCOUNT_MUTATION,
-  CHECK_USER_EXIST_MUTATION,
-} from '../lib/mutations'
 import { getPhoto } from '../lib/helpers'
-import styles from './styles/user-info.css'
+import {
+  CHECK_USER_EXIST_MUTATION,
+  UPDATE_ACCOUNT_MUTATION,
+} from '../lib/mutations'
+import EditPhoto from './edit-photo'
+import styles from './styles/user-info.module.css'
 
 export function UserInfo({ user }) {
   return (
@@ -20,9 +21,9 @@ export function UserInfo({ user }) {
         <div className={styles.info}>{user.info}</div>
       </div>
       <img
+        alt={user.username}
         className={styles.avatar}
         src={getPhoto(user.photo)}
-        alt={user.username}
       />
     </section>
   )
@@ -35,11 +36,11 @@ export function AccountInfo({ me, setEdit }) {
         <div className={styles.edit}>
           <div className={styles.username}>{me.username}</div>
           <button
-            className={cn(styles.button, styles['edit-button'])}
             onClick={() => {
               setEdit(true)
             }}
             aria-label="Редактировать"
+            className={cn(styles.button, styles['edit-button'])}
             type="button"
           >
             Редактировать
@@ -49,9 +50,9 @@ export function AccountInfo({ me, setEdit }) {
         <div className={styles.info}>{me.info}</div>
       </div>
       <img
+        alt={me.username}
         className={styles.avatar}
         src={getPhoto(me.photo)}
-        alt={me.username}
       />
     </section>
   )
@@ -75,31 +76,31 @@ export function AccountEdit({ me, setEdit }) {
   return (
     <section className={styles.wrapper}>
       <Mutation
-        mutation={UPDATE_ACCOUNT_MUTATION}
         update={(cache, mutationResult) => {
           const me = cache.readFragment({
-            id: 'Me',
             fragment: meFragment,
+            id: 'Me',
           })
           cache.writeFragment({
-            id: 'Me',
-            fragment: meFragment,
             data: {
               ...me,
               ...mutationResult.data.updateUser,
             },
+            fragment: meFragment,
+            id: 'Me',
           })
         }}
+        mutation={UPDATE_ACCOUNT_MUTATION}
       >
         {update => (
           <Form
             initialValues={{
-              username: me.username,
               info: me.info || '',
+              username: me.username,
             }}
             onSubmit={async values => {
               await update({
-                variables: { username: values.username, info: values.info },
+                variables: { info: values.info, username: values.username },
               })
               setEdit(false)
             }}
@@ -110,10 +111,10 @@ export function AccountEdit({ me, setEdit }) {
                   <Mutation mutation={CHECK_USER_EXIST_MUTATION}>
                     {check => (
                       <Field
-                        name="username"
                         validate={value =>
                           usernameValidation(value, check, me.username)
                         }
+                        name="username"
                       >
                         {({ input, meta }) => (
                           <div className={styles['field-wrapper']}>
@@ -122,8 +123,8 @@ export function AccountEdit({ me, setEdit }) {
                               className={cn({
                                 [styles.error]: meta.error && meta.touched,
                               })}
-                              type="text"
                               placeholder="Псевдоним"
+                              type="text"
                             />
                             {meta.error && meta.touched && (
                               <span>{meta.error}</span>
@@ -138,11 +139,11 @@ export function AccountEdit({ me, setEdit }) {
                       <div className={styles['field-wrapper']}>
                         <Textarea
                           {...input}
-                          maxLength={255}
-                          placeholder="Краткое био..."
                           className={cn({
                             [styles.error]: meta.error && meta.touched,
                           })}
+                          maxLength={255}
+                          placeholder="Краткое био..."
                         />
                         {meta.error && meta.touched && (
                           <span>{meta.error}</span>
@@ -153,18 +154,18 @@ export function AccountEdit({ me, setEdit }) {
                 </div>
                 <div className={styles.buttons}>
                   <button
-                    className={cn(styles.button, styles['save-button'])}
                     aria-label="Сохранить"
+                    className={cn(styles.button, styles['save-button'])}
                     type="submit"
                   >
                     Сохранить
                   </button>
                   <button
-                    className={cn(styles.button, styles['cancel-button'])}
                     onClick={() => {
                       setEdit(false)
                     }}
                     aria-label="Отменить"
+                    className={cn(styles.button, styles['cancel-button'])}
                     type="button"
                   >
                     Отменить

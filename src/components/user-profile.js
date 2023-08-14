@@ -1,9 +1,10 @@
 import React from 'react'
-import { BigLoader, ErrorMessage, ListStories } from '.'
-import { UserInfo } from './user-info'
-import styles from './styles/user-profile.css'
 
-function UserProfile({ me, user, stories, loading, error, fetchMore }) {
+import { BigLoader, ErrorMessage, ListStories } from '.'
+import styles from './styles/user-profile.module.css'
+import { UserInfo } from './user-info'
+
+function UserProfile({ error, fetchMore, loading, me, stories, user }) {
   if (error) return <ErrorMessage error={error} />
   if (loading) return <BigLoader />
   return (

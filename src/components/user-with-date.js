@@ -6,7 +6,7 @@ import Router from 'next/router'
 import React from 'react'
 
 import { getPhoto } from '../lib/helpers'
-import styles from './styles/user-with-date.css'
+import styles from './styles/user-with-date.module.css'
 
 function routeToUserPage(event, user) {
   event.stopPropagation()

@@ -1,19 +1,20 @@
-import React from 'react'
 import cn from 'classnames'
-import styles from './styles/share-button.css'
+import React from 'react'
 
-function ShareButton({ href, title, icon, className = '' }) {
+import styles from './styles/share-button.module.css'
+
+function ShareButton({ className = '', href, icon, title }) {
   return (
     <a
+      aria-label={title}
       className={cn(styles.button, className)}
       href={href}
-      aria-label={title}
-      target="_blank"
       rel="noopener noreferrer"
+      target="_blank"
     >
       <div>
         <div aria-hidden="true">
-          <img src={icon} alt={title} />
+          <img alt={title} src={icon} />
         </div>
       </div>
     </a>

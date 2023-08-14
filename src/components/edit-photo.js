@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 
 import { getPhoto } from '../lib/helpers'
 import PhotoCropper from './photo-cropper'
-import styles from './styles/edit-photo.css'
+import styles from './styles/edit-photo.module.css'
 
 const Modal = dynamic(() => import('./modal'), { ssr: false })
 

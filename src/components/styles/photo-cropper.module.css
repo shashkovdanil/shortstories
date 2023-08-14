@@ -1,4 +1,4 @@
-@global-import 'react-image-crop/dist/ReactCrop.css';
+@global-import 'react-image-crop/dist/ReactCrop.module.css';
 
 .wrapper {
   display: flex;

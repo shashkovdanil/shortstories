@@ -2,7 +2,7 @@ import React from 'react'
 import onClickOutside from 'react-onclickoutside'
 
 import Portal from './portal'
-import styles from './styles/modal.css'
+import styles from './styles/modal.module.css'
 
 function ModalContent({ children, onClose }) {
   ModalContent.handleClickOutside = onClose

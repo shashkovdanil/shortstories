@@ -1,9 +1,9 @@
 import cn from 'classnames'
 import React from 'react'
 
-// import Footer from './footer'
-// import Header from './header'
-import styles from './styles/wrapper.css'
+import Footer from './footer'
+import Header from './header'
+import styles from './styles/wrapper.module.css'
 
 function Wrapper({
   children,
@@ -14,7 +14,7 @@ function Wrapper({
 }) {
   return (
     <>
-      {/* <Header me={me} /> */}
+      <Header me={me} />
       <main className={cn(styles.wrapper, className)}>
         <div
           className={cn(
@@ -25,7 +25,7 @@ function Wrapper({
         >
           {children}
         </div>
-        {/* <Footer /> */}
+        <Footer />
       </main>
     </>
   )

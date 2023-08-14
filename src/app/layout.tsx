@@ -1,6 +1,7 @@
 import { ApolloWrapper } from '@/services/ApolloWrapper'
 
 import './globals.css'
+import '@/styles/base.css'
 
 export default function RootLayout({
   children,

@@ -6,7 +6,7 @@ import ReactCrop, { makeAspectCrop } from 'react-image-crop'
 import { meFragment, userFragment } from '../lib/fragments'
 import { POST_PHOTO_MUTATION } from '../lib/mutations'
 import Button from './button'
-import styles from './styles/photo-cropper.css'
+import styles from './styles/photo-cropper.module.css'
 
 const Dropzone = dynamic(() => import('react-dropzone'), { ssr: false })
 

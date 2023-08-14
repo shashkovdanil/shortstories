@@ -2,7 +2,7 @@ import React from 'react'
 
 import Button from './button'
 import ItemStories from './item-stories'
-import styles from './styles/list-stories.css'
+import styles from './styles/list-stories.module.css'
 
 function loadMoreStories(fetchMore, offset) {
   fetchMore({

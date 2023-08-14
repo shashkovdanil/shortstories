@@ -1,24 +1,25 @@
-import React from 'react'
 import cn from 'classnames'
-import styles from './styles/input.css'
+import React from 'react'
+
+import styles from './styles/input.module.css'
 
 function Input({
-  rootClassName = '',
-  labelClassName = '',
-  inputClassName = '',
-  errorClassName = '',
-  name,
-  type = 'text',
-  label = '',
-  error = '',
-  loading = false,
   disabled = false,
-  readOnly = false,
-  placeholder = '',
-  rootStyles = {},
-  labelStyles = {},
-  inputStyles = {},
+  error = '',
+  errorClassName = '',
   errorStyles = {},
+  inputClassName = '',
+  inputStyles = {},
+  label = '',
+  labelClassName = '',
+  labelStyles = {},
+  loading = false,
+  name,
+  placeholder = '',
+  readOnly = false,
+  rootClassName = '',
+  rootStyles = {},
+  type = 'text',
   ...rest
 }) {
   return (
@@ -37,14 +38,14 @@ function Input({
       )}
       <input
         {...rest}
-        type={type}
+        className={cn(styles.input, inputClassName)}
+        disabled={disabled}
         id={name}
         name={name}
         placeholder={placeholder}
-        disabled={disabled}
         readOnly={readOnly}
         style={inputStyles}
-        className={cn(styles.input, inputClassName)}
+        type={type}
       />
       {error && (
         <span className={cn(styles.error, errorClassName)} style={errorStyles}>

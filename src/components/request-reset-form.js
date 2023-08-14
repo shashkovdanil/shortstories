@@ -10,8 +10,8 @@ import {
 } from '../lib/mutations'
 import { login } from '../lib/validators'
 import DebouncingValidatingField from './debouncing-validating-field'
-import authFormStyles from './styles/auth-form.css'
-import styles from './styles/request-reset-form.css'
+import authFormStyles from './styles/auth-form.module.css'
+import styles from './styles/request-reset-form.module.css'
 
 function RequestResetForm() {
   const [email, setEmail] = useState('')

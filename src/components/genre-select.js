@@ -1,31 +1,32 @@
-import React from 'react'
 import cn from 'classnames'
 import Downshift from 'downshift'
-import styles from './styles/genre-select.css'
+import React from 'react'
+
+import styles from './styles/genre-select.module.css'
 
 const filterResult = (item, inputValue) =>
   !inputValue || item.name.toLowerCase().includes(inputValue.toLowerCase())
 
-function GenreSelect({ items, onSelect, isDarkMode, input }) {
+function GenreSelect({ input, isDarkMode, items, onSelect }) {
   const getFilteredItems = inputValue =>
     items.filter(item => filterResult(item, inputValue))
 
   return (
     <Downshift
       {...input}
-      onChange={onSelect}
-      itemToString={item => (item ? item.name : '')}
-      onInputValueChange={input.onChange}
       initialSelectedItem={input.value}
+      itemToString={item => (item ? item.name : '')}
+      onChange={onSelect}
+      onInputValueChange={input.onChange}
     >
       {({
-        getToggleButtonProps,
         getItemProps,
         getMenuProps,
         getRootProps,
-        isOpen,
-        inputValue,
+        getToggleButtonProps,
         highlightedIndex,
+        inputValue,
+        isOpen,
         selectedItem,
       }) => (
         <div {...getRootProps({ className: styles.wrapper })}>
@@ -39,9 +40,9 @@ function GenreSelect({ items, onSelect, isDarkMode, input }) {
           <ul
             {...getMenuProps({
               className: cn(styles.list, {
+                [styles.darkList]: isDarkMode,
                 [styles.hideList]:
                   !isOpen || !getFilteredItems(inputValue).length,
-                [styles.darkList]: isDarkMode,
               }),
             })}
           >
@@ -49,13 +50,13 @@ function GenreSelect({ items, onSelect, isDarkMode, input }) {
               ? items.map((item, index) => (
                   <li
                     {...getItemProps({
-                      key: item.name,
+                      className: cn(styles.listItem, {
+                        [styles.darkListItem]: isDarkMode,
+                        [styles.selectedListItem]: highlightedIndex === index,
+                      }),
                       index,
                       item,
-                      className: cn(styles.listItem, {
-                        [styles.selectedListItem]: highlightedIndex === index,
-                        [styles.darkListItem]: isDarkMode,
-                      }),
+                      key: item.name,
                     })}
                   >
                     {item.name}

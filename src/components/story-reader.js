@@ -7,8 +7,8 @@ import { BigLoader, ErrorMessage, Reaction, ShareButton, UserWithDate } from '.'
 import withDarkMode from '../hoc/with-dark-mode'
 import { STORY_QUERY } from '../lib/queries'
 import Comments from './comments'
-import storyStyles from './styles/story.css'
-import styles from './styles/story-reader.css'
+import storyStyles from './styles/story.module.css'
+import styles from './styles/story-reader.module.css'
 
 function StoryReader({ id, mode, theme, viewStory }) {
   const [href, setHref] = useState(null)

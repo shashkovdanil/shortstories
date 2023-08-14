@@ -1,15 +1,15 @@
-import React from 'react'
 import Link from 'next/link'
+import React from 'react'
+
 import Signout from './signout'
-import styles from './styles/nav.css'
+import styles from './styles/nav.module.css'
 
 function Nav({ me }) {
-  console.log('me', me)
-  const isLoggedIn = +me.id > 0
+  const isLoggedIn = !!me
   return (
     <>
       <div className={styles['mobile-menu']}>
-        <input className={styles.checkbox} type="checkbox" id="toggle" />
+        <input className={styles.checkbox} id="toggle" type="checkbox" />
         {/* eslint-disable-next-line */}
         <label className={styles.button} htmlFor="toggle">
           <span className={styles.icon}>&nbsp;</span>
@@ -20,19 +20,15 @@ function Nav({ me }) {
             {isLoggedIn && (
               <>
                 <li>
-                  <Link href="/create-story">
-                    <a className={styles.write}>
-                      Написать рассказ&nbsp;
-                      <span role="img" aria-label="emoji">
-                        ✍️
-                      </span>
-                    </a>
+                  <Link className={styles.write} href="/create-story">
+                    Написать рассказ&nbsp;
+                    <span aria-label="emoji" role="img">
+                      ✍️
+                    </span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/me">
-                    <a>Профиль</a>
-                  </Link>
+                  <Link href="/me">Профиль</Link>
                 </li>
                 <li>
                   <Signout />
@@ -42,14 +38,12 @@ function Nav({ me }) {
             {!isLoggedIn && (
               <>
                 <li>
-                  <Link href="/signup">
-                    <a className={styles.signup}>Регистрация</a>
+                  <Link className={styles.signup} href="/signup">
+                    Регистрация
                   </Link>
                 </li>
                 <li>
-                  <Link href="/signin">
-                    <a>Вход</a>
-                  </Link>
+                  <Link href="/signin">Вход</Link>
                 </li>
               </>
             )}
@@ -59,28 +53,22 @@ function Nav({ me }) {
       <nav className={styles.nav}>
         {isLoggedIn && (
           <>
-            <Link href="/create-story">
-              <a className={styles.write}>
-                Написать рассказ&nbsp;
-                <span role="img" aria-label="emoji">
-                  ✍️
-                </span>
-              </a>
+            <Link className={styles.write} href="/create-story">
+              Написать рассказ&nbsp;
+              <span aria-label="emoji" role="img">
+                ✍️
+              </span>
             </Link>
-            <Link href="/me">
-              <a>Профиль</a>
-            </Link>
+            <Link href="/me">Профиль</Link>
             <Signout />
           </>
         )}
         {!isLoggedIn && (
           <>
-            <Link href="/signup">
-              <a className={styles.signup}>Регистрация</a>
+            <Link className={styles.signup} href="/signup">
+              Регистрация
             </Link>
-            <Link href="/signin">
-              <a>Вход</a>
-            </Link>
+            <Link href="/signin">Вход</Link>
           </>
         )}
       </nav>

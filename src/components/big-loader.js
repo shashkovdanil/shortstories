@@ -1,6 +1,7 @@
-import React from 'react'
 import cn from 'classnames'
-import styles from './styles/big-loader.css'
+import React from 'react'
+
+import styles from './styles/big-loader.module.css'
 
 function BigLoader({ className = '' }) {
   return (

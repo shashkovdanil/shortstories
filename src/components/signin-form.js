@@ -9,8 +9,8 @@ import { meFragment } from '../lib/fragments'
 import { CHECK_USER_EXIST_MUTATION, SIGN_IN_MUTATION } from '../lib/mutations'
 import { login, password } from '../lib/validators'
 import DebouncingValidatingField from './debouncing-validating-field'
-import authFormStyles from './styles/auth-form.css'
-import styles from './styles/signin-form.css'
+import authFormStyles from './styles/auth-form.module.css'
+import styles from './styles/signin-form.module.css'
 
 function SigninForm({ returnUrl }) {
   return (

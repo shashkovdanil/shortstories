@@ -1,5 +1,6 @@
 import React from 'react'
-import styles from './styles/error-message.css'
+
+import styles from './styles/error-message.module.css'
 
 function ErrorMessage({ error = {} }) {
   if (!error || !error.message) return null
@@ -9,7 +10,7 @@ function ErrorMessage({ error = {} }) {
     error.networkError.result.errors.length
   ) {
     return error.networkError.result.errors.map((error, index) => (
-      <div key={index} className={styles.error}>
+      <div className={styles.error} key={index}>
         <p>
           <strong>Ошибка!</strong>
           {error.message.replace('GraphQL error: ', '')}

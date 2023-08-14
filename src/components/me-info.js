@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { BigLoader, ErrorMessage, ListStories } from '.'
-import { AccountInfo, AccountEdit } from './user-info'
-import styles from './styles/me-info.css'
 
-function MeInfo({ me, data, loading, error, fetchMore }) {
+import { BigLoader, ErrorMessage, ListStories } from '.'
+import styles from './styles/me-info.module.css'
+import { AccountEdit, AccountInfo } from './user-info'
+
+function MeInfo({ data, error, fetchMore, loading, me }) {
   const [tab, setTab] = useState('written')
   const [isEdit, setEdit] = useState(false)
   const stories = tab === 'written' ? data.writtenStories : data.favStories
@@ -14,9 +15,9 @@ function MeInfo({ me, data, loading, error, fetchMore }) {
     ) : (
       <ListStories
         {...stories}
+        fetchMore={fetchMore}
         me={me}
         userId={tab === 'written' ? me.id : null}
-        fetchMore={fetchMore}
       />
     )
   }
@@ -35,22 +36,22 @@ function MeInfo({ me, data, loading, error, fetchMore }) {
       </div>
       <div className={styles.tabs}>
         <button
-          className={tab === 'written' ? styles.active : ''}
-          type="button"
-          role="tab"
           onClick={() => {
             setTab('written')
           }}
+          className={tab === 'written' ? styles.active : ''}
+          role="tab"
+          type="button"
         >
           Написанные
         </button>
         <button
-          className={tab === 'favs' ? styles.active : ''}
-          type="button"
-          role="tab"
           onClick={() => {
             setTab('favs')
           }}
+          className={tab === 'favs' ? styles.active : ''}
+          role="tab"
+          type="button"
         >
           Понравившиеся
         </button>

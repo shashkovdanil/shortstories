@@ -7,8 +7,8 @@ import { Button, ErrorMessage, Input, Logo } from '.'
 import { meFragment } from '../lib/fragments'
 import { RESET_PASSWORD_MUTATION } from '../lib/mutations'
 import { confirmationPassword, password } from '../lib/validators'
-import authFormStyles from './styles/auth-form.css'
-import styles from './styles/reset-form.css'
+import authFormStyles from './styles/auth-form.module.css'
+import styles from './styles/reset-form.module.css'
 
 function ResetPasswordForm({ token }) {
   return (

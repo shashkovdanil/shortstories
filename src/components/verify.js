@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react'
 import { Mutation } from 'react-apollo'
+
 import { ErrorMessage, Loader, Logo } from '.'
 import { meFragment } from '../lib/fragments'
 import { VERIFY_MUTATION } from '../lib/mutations'
-import styles from './styles/verify.css'
+import styles from './styles/verify.module.css'
 
-function Success({ verify, loading, data, error }) {
+function Success({ data, error, loading, verify }) {
   useEffect(() => {
     verify()
   }, [verify])
@@ -35,22 +36,22 @@ function Result({ token }) {
         <h3>Ошибка! Не пытайтесь верифицировать аккаунт без токена!</h3>
       ) : (
         <Mutation
-          mutation={VERIFY_MUTATION}
-          variables={{ token }}
           update={(cache, mutationResult) => {
             const me = cache.readFragment({
-              id: 'Me',
               fragment: meFragment,
+              id: 'Me',
             })
             cache.writeFragment({
-              id: 'Me',
-              fragment: meFragment,
               data: {
                 ...me,
                 ...mutationResult.data.verifyUser,
               },
+              fragment: meFragment,
+              id: 'Me',
             })
           }}
+          mutation={VERIFY_MUTATION}
+          variables={{ token }}
         >
           {(verifyUser, result) => <Success verify={verifyUser} {...result} />}
         </Mutation>

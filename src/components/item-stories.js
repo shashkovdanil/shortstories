@@ -7,7 +7,7 @@ import Router from 'next/router'
 import React from 'react'
 import readingTime from 'reading-time'
 
-import styles from './styles/item-stories.css'
+import styles from './styles/item-stories.module.css'
 import UserWithDate from './user-with-date'
 
 function getLength(l) {

@@ -2,7 +2,7 @@ import cn from 'classnames'
 import React, { useEffect, useState } from 'react'
 
 import ShareButton from './share-button'
-import styles from './styles/footer.css'
+import styles from './styles/footer.module.css'
 
 const title = 'Shortstories. Стань лучшим автором'
 

@@ -14,7 +14,7 @@ import {
   UPDATE_COMMENT_MUTATION,
 } from '../lib/mutations'
 import { STORY_QUERY } from '../lib/queries'
-import styles from './styles/comments.css'
+import styles from './styles/comments.module.css'
 
 function editUpdate(cache, payload, id) {
   cache.writeFragment({

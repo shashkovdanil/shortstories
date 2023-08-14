@@ -2,7 +2,7 @@ import cn from 'classnames'
 import React, { useState } from 'react'
 
 import Button from './button'
-import styles from './styles/settings-sort.css'
+import styles from './styles/settings-sort.module.css'
 
 const lengths = [
   { id: 'short', name: 'Короткие' },
