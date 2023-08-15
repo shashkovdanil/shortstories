@@ -47,7 +47,7 @@ function ItemStories({
   return (
     <article
       onClick={() => {
-        router.push(`/story?id=${id}`, `/story/${id}-${slugify(title)}`, {
+        router.push(`/story/${id}-${slugify(title)}`, {
           scroll: false,
         })
       }}

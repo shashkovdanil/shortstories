@@ -16,7 +16,7 @@ export default async function CreateStoryPage() {
   }
 
   const cookieStore = cookies()
-  const theme = cookieStore.get('theme')
+  const theme = cookieStore.get('theme') || 'light'
 
-  return <StoryCreator theme={theme || 'light'} userId={me.id} />
+  return <StoryCreator theme={theme} userId={me.id} />
 }

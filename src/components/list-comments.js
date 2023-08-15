@@ -7,8 +7,8 @@ import {
 import { STORY_QUERY } from '@/graphql/queries'
 import { useMutation } from '@apollo/client'
 import cn from 'classnames'
-import compareDesc from 'date-fns/compare_desc'
-import nanoid from 'nanoid'
+import compareDesc from 'date-fns/compareDesc'
+import { nanoid } from 'nanoid'
 import { groupBy } from 'ramda'
 import React, { useState } from 'react'
 import ReactTextareaAutosize from 'react-textarea-autosize'
@@ -157,87 +157,8 @@ function ListComments({
   const groupedComments = byCommentId(comments)
   const parentComments = groupedComments['null']
 
-  const [deleteComment] = useMutation(DELETE_COMMENT_MUTATION, {
-    optimisticResponse: {
-      __typename: 'Mutation',
-      deleteComment: {
-        __typename: 'Comment',
-        id: comment.id,
-      },
-    },
-    update: (cache, payload) =>
-      deleteUpdate(
-        cache,
-        payload,
-        storyId,
-        !!groupedComments[comment.id],
-        comment.commentId,
-      ),
-    variables: {
-      commentId: comment.commentId,
-      hasChildren: !!groupedComments[comment.id],
-      id: comment.id,
-    },
-  })
-  const [createComment] = useMutation(CREATE_COMMENT_MUTATION, {
-    optimisticResponse: {
-      __typename: 'Mutation',
-      createComment: {
-        __typename: 'Comment',
-        body: replyCommentBody,
-        commentId: comment.id,
-        createdAt: new Date().toISOString(),
-        id: nanoid(10),
-        user: {
-          __typename: 'User',
-          id: me.id,
-          info: me.info,
-          photo: me.photo,
-          username: me.username,
-        },
-      },
-    },
-    update: (cache, mutationResult) => {
-      const storyQuery = cache.readQuery({
-        query: STORY_QUERY,
-        variables: { id: storyId },
-      })
-      const story = cache.readFragment({
-        fragment: storyFragment,
-        fragmentName: 'story',
-        id: `Story:${storyId}`,
-      })
-
-      storyQuery.comments = [
-        ...storyQuery.comments,
-        mutationResult.data.createComment,
-      ].sort((a, b) => compareDesc(a.createdAt, b.createdAt))
-
-      cache.writeQuery({
-        data: storyQuery,
-        query: STORY_QUERY,
-        variables: { id: storyId },
-      })
-
-      cache.writeFragment({
-        data: {
-          ...story,
-          stats: {
-            ...story.stats,
-            comments: story.stats.comments + 1,
-          },
-        },
-        fragment: storyFragment,
-        fragmentName: 'story',
-        id: `Story:${storyId}`,
-      })
-    },
-    variables: {
-      body: replyCommentBody,
-      commentId: comment.id,
-      id: storyId,
-    },
-  })
+  const [deleteComment] = useMutation(DELETE_COMMENT_MUTATION)
+  const [createComment] = useMutation(CREATE_COMMENT_MUTATION)
 
   const recurComments = (array = parentComments, id, parentId) => {
     const isParent = !(id && id !== parentId)
@@ -291,7 +212,28 @@ function ListComments({
                     <button
                       onClick={e => {
                         e.stopPropagation()
-                        deleteComment()
+                        deleteComment({
+                          optimisticResponse: {
+                            __typename: 'Mutation',
+                            deleteComment: {
+                              __typename: 'Comment',
+                              id: comment.id,
+                            },
+                          },
+                          update: (cache, payload) =>
+                            deleteUpdate(
+                              cache,
+                              payload,
+                              storyId,
+                              !!groupedComments[comment.id],
+                              comment.commentId,
+                            ),
+                          variables: {
+                            commentId: comment.commentId,
+                            hasChildren: !!groupedComments[comment.id],
+                            id: comment.id,
+                          },
+                        })
                       }}
                       className={cn({ [styles.dark]: isDarkMode })}
                       type="button"
@@ -328,7 +270,67 @@ function ListComments({
                   <div className={styles['reply-buttons']}>
                     <Button
                       onClick={async () => {
-                        await createComment()
+                        await createComment({
+                          optimisticResponse: {
+                            __typename: 'Mutation',
+                            createComment: {
+                              __typename: 'Comment',
+                              body: replyCommentBody,
+                              commentId: comment.id,
+                              createdAt: new Date().toISOString(),
+                              id: Math.random(),
+                              user: {
+                                __typename: 'User',
+                                id: me.id,
+                                info: me.info,
+                                photo: me.photo,
+                                username: me.username,
+                              },
+                            },
+                          },
+                          update: (cache, mutationResult) => {
+                            const storyQuery = cache.readQuery({
+                              query: STORY_QUERY,
+                              variables: { id: storyId },
+                            })
+                            const story = cache.readFragment({
+                              fragment: storyFragment,
+                              fragmentName: 'story',
+                              id: `Story:${storyId}`,
+                            })
+
+                            storyQuery.comments = [
+                              ...storyQuery.comments,
+                              mutationResult.data.createComment,
+                            ].sort((a, b) =>
+                              compareDesc(a.createdAt, b.createdAt),
+                            )
+
+                            cache.writeQuery({
+                              data: storyQuery,
+                              query: STORY_QUERY,
+                              variables: { id: storyId },
+                            })
+
+                            cache.writeFragment({
+                              data: {
+                                ...story,
+                                stats: {
+                                  ...story.stats,
+                                  comments: story.stats.comments + 1,
+                                },
+                              },
+                              fragment: storyFragment,
+                              fragmentName: 'story',
+                              id: `Story:${storyId}`,
+                            })
+                          },
+                          variables: {
+                            body: replyCommentBody,
+                            commentId: comment.id,
+                            id: storyId,
+                          },
+                        })
                         setReplyCommentBody('')
                         setReplyCommentId(null)
                       }}

@@ -87,7 +87,7 @@ export const mutations: UsersMutations = {
       text: `Click on the link below to reset your password
       \n\n
       <br />
-      <a href="${process.env.FRONTEND_URL}/reset?resetToken=${resetToken}">Click here</a>`,
+      <a href="${process.env.NEXT_PUBLIC_FRONTEND_URL}/reset?resetToken=${resetToken}">Click here</a>`,
       to: user.email,
     })
 
@@ -241,7 +241,7 @@ export const mutations: UsersMutations = {
       text: `Welcome to Shortstories! Confirm your email by clicking on the link below:
             \n\n
             <br />
-            <a href="${process.env.FRONTEND_URL}/verify?verifyToken=${verifyToken}">Click here</a>`,
+            <a href="${process.env.NEXT_PUBLIC_FRONTEND_URL}/verify?verifyToken=${verifyToken}">Click here</a>`,
       to: user.email,
     })
 

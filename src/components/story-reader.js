@@ -27,6 +27,7 @@ function StoryReader({ id, mode, theme, viewStory }) {
   if (error) return <ErrorMessage error={error} />
   if (!data.story) return <p>Рассказа не существует</p>
   const { comments, me, story } = data
+
   return (
     <div
       className={cn(styles['story-wrapper'], {

@@ -95,7 +95,6 @@ export const queries: StoriesQueries = {
       }
 
       if (userId) {
-        console.log(userId)
         result.userId = {
           equals: userId,
         }

@@ -1,5 +1,3 @@
-@global-import 'react-image-crop/dist/ReactCrop.module.css';
-
 .wrapper {
   display: flex;
   align-items: center;

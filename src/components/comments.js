@@ -3,8 +3,8 @@ import { CREATE_COMMENT_MUTATION } from '@/graphql/mutations'
 import { STORY_QUERY } from '@/graphql/queries'
 import { useMutation } from '@apollo/client'
 import cn from 'classnames'
-import compareDesc from 'date-fns/compare_desc'
-import nanoid from 'nanoid'
+import compareDesc from 'date-fns/compareDesc'
+import { nanoid } from 'nanoid'
 import React, { useState } from 'react'
 import ReactTextareaAutosize from 'react-textarea-autosize'
 
@@ -20,23 +20,25 @@ function Comments({ comments, id, isDarkMode, me }) {
   const [createComment, { error, loading }] = useMutation(
     CREATE_COMMENT_MUTATION,
     {
-      optimisticResponse: {
-        __typename: 'Mutation',
-        createComment: {
-          __typename: 'Comment',
-          body,
-          commentId: null,
-          createdAt: new Date().toISOString(),
-          id: nanoid(10),
-          user: {
-            __typename: 'User',
-            id: me.id,
-            info: me.info,
-            photo: me.photo,
-            username: me.username,
-          },
-        },
-      },
+      optimisticResponse: me
+        ? {
+            __typename: 'Mutation',
+            createComment: {
+              __typename: 'Comment',
+              body,
+              commentId: null,
+              createdAt: new Date().toISOString(),
+              id: nanoid(10),
+              user: {
+                __typename: 'User',
+                id: me.id,
+                info: me.info,
+                photo: me.photo,
+                username: me.username,
+              },
+            },
+          }
+        : undefined,
       update: (cache, mutationResult) => {
         const storyQuery = cache.readQuery({
           query: STORY_QUERY,

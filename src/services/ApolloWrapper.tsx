@@ -1,5 +1,7 @@
 'use client'
 
+import type { PropsWithChildren } from 'react'
+
 import { ApolloLink, HttpLink } from '@apollo/client'
 import {
   ApolloNextAppProvider,
@@ -8,9 +10,13 @@ import {
   SSRMultipartLink,
 } from '@apollo/experimental-nextjs-app-support/ssr'
 
-function makeClient() {
+const makeClient = (token: string) => () => {
+  const headers = token ? { Cookie: `token=${token}` } : {}
+
   const httpLink = new HttpLink({
-    uri: `${process.env.FRONTEND_URL}/graphql`,
+    credentials: 'same-origin',
+    headers,
+    uri: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/graphql`,
   })
 
   return new NextSSRApolloClient({
@@ -28,9 +34,13 @@ function makeClient() {
   })
 }
 
-export function ApolloWrapper({ children }: React.PropsWithChildren) {
+type Props = {
+  token: string
+}
+
+export function ApolloWrapper({ children, token }: PropsWithChildren<Props>) {
   return (
-    <ApolloNextAppProvider makeClient={makeClient}>
+    <ApolloNextAppProvider makeClient={makeClient(token)}>
       {children}
     </ApolloNextAppProvider>
   )

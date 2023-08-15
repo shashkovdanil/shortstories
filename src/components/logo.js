@@ -5,10 +5,8 @@ import styles from './styles/logo.module.css'
 
 function Logo() {
   return (
-    <Link href="/">
-      <a className={styles.logo}>
-        <img alt="" src="/images/writer.svg" />
-      </a>
+    <Link className={styles.logo} href="/">
+      <img alt="" src="/images/writer.svg" />
     </Link>
   )
 }
