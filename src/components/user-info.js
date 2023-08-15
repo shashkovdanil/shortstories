@@ -1,15 +1,15 @@
-import cn from 'classnames'
-import React from 'react'
-import { Mutation } from 'react-apollo'
-import { Field, Form } from 'react-final-form'
-import Textarea from 'react-textarea-autosize'
-
-import { meFragment } from '../lib/fragments'
-import { getPhoto } from '../lib/helpers'
+import { meFragment } from '@/graphql/fragments'
 import {
   CHECK_USER_EXIST_MUTATION,
   UPDATE_ACCOUNT_MUTATION,
-} from '../lib/mutations'
+} from '@/graphql/mutations'
+import { useMutation } from '@apollo/client'
+import cn from 'classnames'
+import React from 'react'
+import { Field, Form } from 'react-final-form'
+import Textarea from 'react-textarea-autosize'
+
+import { getPhoto } from '../lib/helpers'
 import EditPhoto from './edit-photo'
 import styles from './styles/user-info.module.css'
 
@@ -59,6 +59,26 @@ export function AccountInfo({ me, setEdit }) {
 }
 
 export function AccountEdit({ me, setEdit }) {
+  const [update] = useMutation(UPDATE_ACCOUNT_MUTATION, {
+    update: (cache, mutationResult) => {
+      const me = cache.readFragment({
+        fragment: meFragment,
+        id: 'Me',
+      })
+      cache.writeFragment({
+        data: {
+          ...me,
+          ...mutationResult.data.updateUser,
+        },
+        fragment: meFragment,
+        id: 'Me',
+      })
+    },
+  })
+  const [checkUserExists] = useMutation(CHECK_USER_EXIST_MUTATION, {
+    fetchPolicy: 'no-cache',
+  })
+
   async function usernameValidation(value, check, initialValue) {
     if (!value) return 'Введите псевдоним'
     if (value !== initialValue) {
@@ -75,107 +95,79 @@ export function AccountEdit({ me, setEdit }) {
 
   return (
     <section className={styles.wrapper}>
-      <Mutation
-        update={(cache, mutationResult) => {
-          const me = cache.readFragment({
-            fragment: meFragment,
-            id: 'Me',
-          })
-          cache.writeFragment({
-            data: {
-              ...me,
-              ...mutationResult.data.updateUser,
-            },
-            fragment: meFragment,
-            id: 'Me',
-          })
+      <Form
+        initialValues={{
+          info: me.info || '',
+          username: me.username,
         }}
-        mutation={UPDATE_ACCOUNT_MUTATION}
+        onSubmit={async values => {
+          await update({
+            variables: { info: values.info, username: values.username },
+          })
+          setEdit(false)
+        }}
       >
-        {update => (
-          <Form
-            initialValues={{
-              info: me.info || '',
-              username: me.username,
-            }}
-            onSubmit={async values => {
-              await update({
-                variables: { info: values.info, username: values.username },
-              })
-              setEdit(false)
-            }}
-          >
-            {({ handleSubmit }) => (
-              <form className={styles['edit-form']} onSubmit={handleSubmit}>
-                <div>
-                  <Mutation mutation={CHECK_USER_EXIST_MUTATION}>
-                    {check => (
-                      <Field
-                        validate={value =>
-                          usernameValidation(value, check, me.username)
-                        }
-                        name="username"
-                      >
-                        {({ input, meta }) => (
-                          <div className={styles['field-wrapper']}>
-                            <input
-                              {...input}
-                              className={cn({
-                                [styles.error]: meta.error && meta.touched,
-                              })}
-                              placeholder="Псевдоним"
-                              type="text"
-                            />
-                            {meta.error && meta.touched && (
-                              <span>{meta.error}</span>
-                            )}
-                          </div>
-                        )}
-                      </Field>
-                    )}
-                  </Mutation>
-                  <Field name="info" validate={infoValidation}>
-                    {({ input, meta }) => (
-                      <div className={styles['field-wrapper']}>
-                        <Textarea
-                          {...input}
-                          className={cn({
-                            [styles.error]: meta.error && meta.touched,
-                          })}
-                          maxLength={255}
-                          placeholder="Краткое био..."
-                        />
-                        {meta.error && meta.touched && (
-                          <span>{meta.error}</span>
-                        )}
-                      </div>
-                    )}
-                  </Field>
-                </div>
-                <div className={styles.buttons}>
-                  <button
-                    aria-label="Сохранить"
-                    className={cn(styles.button, styles['save-button'])}
-                    type="submit"
-                  >
-                    Сохранить
-                  </button>
-                  <button
-                    onClick={() => {
-                      setEdit(false)
-                    }}
-                    aria-label="Отменить"
-                    className={cn(styles.button, styles['cancel-button'])}
-                    type="button"
-                  >
-                    Отменить
-                  </button>
-                </div>
-              </form>
-            )}
-          </Form>
+        {({ handleSubmit }) => (
+          <form className={styles['edit-form']} onSubmit={handleSubmit}>
+            <div>
+              <Field
+                validate={value =>
+                  usernameValidation(value, checkUserExists, me.username)
+                }
+                name="username"
+              >
+                {({ input, meta }) => (
+                  <div className={styles['field-wrapper']}>
+                    <input
+                      {...input}
+                      className={cn({
+                        [styles.error]: meta.error && meta.touched,
+                      })}
+                      placeholder="Псевдоним"
+                      type="text"
+                    />
+                    {meta.error && meta.touched && <span>{meta.error}</span>}
+                  </div>
+                )}
+              </Field>
+              <Field name="info" validate={infoValidation}>
+                {({ input, meta }) => (
+                  <div className={styles['field-wrapper']}>
+                    <Textarea
+                      {...input}
+                      className={cn({
+                        [styles.error]: meta.error && meta.touched,
+                      })}
+                      maxLength={255}
+                      placeholder="Краткое био..."
+                    />
+                    {meta.error && meta.touched && <span>{meta.error}</span>}
+                  </div>
+                )}
+              </Field>
+            </div>
+            <div className={styles.buttons}>
+              <button
+                aria-label="Сохранить"
+                className={cn(styles.button, styles['save-button'])}
+                type="submit"
+              >
+                Сохранить
+              </button>
+              <button
+                onClick={() => {
+                  setEdit(false)
+                }}
+                aria-label="Отменить"
+                className={cn(styles.button, styles['cancel-button'])}
+                type="button"
+              >
+                Отменить
+              </button>
+            </div>
+          </form>
         )}
-      </Mutation>
+      </Form>
       <EditPhoto me={me} />
     </section>
   )
