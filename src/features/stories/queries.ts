@@ -94,19 +94,17 @@ export const queries: StoriesQueries = {
         }
       }
 
-      if (userId) {
+      if (typeof isLiked !== 'boolean' && userId) {
         result.userId = {
           equals: userId,
         }
       }
 
-      if (isLiked) {
-        result.userId = {
-          equals: userId,
-        }
+      if (typeof isLiked === 'boolean' && isLiked === true) {
         result.reactions = {
-          every: {
+          some: {
             state: 'Like',
+            userId,
           },
         }
       }

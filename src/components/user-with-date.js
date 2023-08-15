@@ -15,7 +15,7 @@ function UserWithDate({ className = '', date, user }) {
     <div
       onClick={event => {
         event.stopPropagation()
-        router.push(`/user/${user.id}-${slugify(user.username)}`, {
+        router.push(`/users/${user.id}`, {
           scroll: false,
         })
       }}

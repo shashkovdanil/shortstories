@@ -1,4 +1,14 @@
 import { meFragment } from '@/graphql/fragments'
+import {
+  CHECK_USER_EXIST_MUTATION,
+  SIGN_UP_MUTATION,
+} from '@/graphql/mutations'
+import {
+  confirmationPassword,
+  isEmail,
+  password,
+  username,
+} from '@/lib/validators'
 import { useMutation } from '@apollo/client'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -6,16 +16,6 @@ import React from 'react'
 import { Field, Form } from 'react-final-form'
 
 import { Button, ErrorMessage, Input, Logo } from '.'
-import {
-  CHECK_USER_EXIST_MUTATION,
-  SIGN_UP_MUTATION,
-} from '../../src/lib/mutations'
-import {
-  confirmationPassword,
-  isEmail,
-  password,
-  username,
-} from '../../src/lib/validators'
 import DebouncingValidatingField from './debouncing-validating-field'
 import authFormStyles from './styles/auth-form.module.css'
 import styles from './styles/signup-form.module.css'
@@ -53,7 +53,7 @@ function SignupForm() {
             <img alt="Назад" src="/images/icons/left-arrow.svg" />
           </button>
           <Logo />
-          <ErrorMessage error={signUpMutation.result.error} />
+          <ErrorMessage error={error} />
           <DebouncingValidatingField
             name="username"
             validate={value => username(value, checkUserExists)}
@@ -112,12 +112,7 @@ function SignupForm() {
             )}
           </Field>
           <div className={authFormStyles['button-with-error']}>
-            <Button
-              black
-              disabled={submitting}
-              loading={signUpMutation.result.loading}
-              type="submit"
-            >
+            <Button black disabled={submitting} loading={loading} type="submit">
               Зарегистрироваться
             </Button>
           </div>

@@ -1,3 +1,4 @@
+import { Buffer } from 'node:buffer'
 import crypto from 'node:crypto'
 import { Resend } from 'resend'
 
@@ -7,7 +8,7 @@ export async function generatePasswordHash(password: string) {
   return new Promise<string>(resolve => {
     crypto.randomBytes(saltRounds, (_, salt) => {
       crypto.pbkdf2(password, salt, 10000, 64, 'sha512', (_, derivedKey) => {
-        resolve(derivedKey.toString('hex'))
+        resolve(`${salt.toString('base64')}:${derivedKey.toString('hex')}`)
       })
     })
   })
@@ -18,9 +19,10 @@ export async function validatePassword(
   hashedPassword: string,
 ) {
   const [salt, derivedKey] = hashedPassword.split(':')
+  const saltBuffer = Buffer.from(salt, 'base64')
 
   return new Promise<boolean>(resolve => {
-    crypto.pbkdf2(password, salt, 10000, 64, 'sha512', (_, key) => {
+    crypto.pbkdf2(password, saltBuffer, 10000, 64, 'sha512', (_, key) => {
       resolve(key.toString('hex') === derivedKey)
     })
   })

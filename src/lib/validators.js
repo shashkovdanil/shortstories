@@ -24,7 +24,7 @@ export const username = async (value, check) => {
   if (value.length < 3) return 'Слишком короткий псевдоним'
   if (value.length > 50) return 'Слишком длинный псевдоним'
   const { data } = await checkUnique(value, check)
-  if (data.checkUserExist) return 'Псевдоним занят'
+  if (data.checkUserExists) return 'Псевдоним занят'
 }
 
 export const isEmail = async (value, check) => {
@@ -32,7 +32,8 @@ export const isEmail = async (value, check) => {
   if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value))
     return 'Некорректный имэйл'
   const { data } = await checkUnique(value, check)
-  if (data.checkUserExist) return 'Имэйл занят'
+
+  if (data.checkUserExists) return 'Имэйл занят'
 }
 
 export const password = value => {
@@ -49,8 +50,13 @@ export const confirmationPassword = (value, passwordValue) => {
 export const login = async (value, check) => {
   if (!value) return 'Введите логин'
   const { data } = await checkUnique(value, check)
-  if (!data.checkUserExist) return 'Аккаунт не найден'
+  if (!data.checkUserExists) return 'Аккаунт не найден'
 }
 
-export const composeValidators = (...validators) => value =>
-  validators.reduce((error, validator) => error || validator(value), undefined)
+export const composeValidators =
+  (...validators) =>
+  value =>
+    validators.reduce(
+      (error, validator) => error || validator(value),
+      undefined,
+    )

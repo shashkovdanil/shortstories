@@ -74,7 +74,7 @@ function RequestResetForm() {
                 )}
               </DebouncingValidatingField>
               <div className={authFormStyles['button-wrapper']}>
-                <Button className={styles['back-button']} onClick={Router.back}>
+                <Button className={styles['back-button']} onClick={router.back}>
                   Назад
                 </Button>
                 <Button

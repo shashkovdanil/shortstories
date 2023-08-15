@@ -3,15 +3,14 @@ import {
   CHECK_USER_EXIST_MUTATION,
   SIGN_IN_MUTATION,
 } from '@/graphql/mutations'
+import { isEmpty } from '@/lib/validators'
 import { useMutation } from '@apollo/client'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import { Field, Form } from 'react-final-form'
 
-import { Button, ErrorMessage, Input, Logo } from '.'
-import { login, password } from '../lib/validators'
-import DebouncingValidatingField from './debouncing-validating-field'
+import { Button, ErrorMessage, Input, Logo } from './'
 import authFormStyles from './styles/auth-form.module.css'
 import styles from './styles/signin-form.module.css'
 
@@ -38,14 +37,14 @@ function SigninForm({ returnUrl }) {
             router.replace(`/${returnUrl}`)
             return
           }
-          Router.push('/')
+          router.push('/')
         })
       }}
       render={({ handleSubmit }) => (
         <form className={authFormStyles.form} onSubmit={handleSubmit}>
           <button
             onClick={() => {
-              Router.back()
+              router.back()
             }}
             className={authFormStyles.back}
             type="button"
@@ -54,9 +53,9 @@ function SigninForm({ returnUrl }) {
           </button>
           <Logo />
           <ErrorMessage error={error} />
-          <DebouncingValidatingField
+          <Field
             name="login"
-            validate={value => login(value, checkUserExist)}
+            validate={value => isEmpty(value, "Can't be empty")}
           >
             {({ input, meta }) => (
               <Input
@@ -67,8 +66,11 @@ function SigninForm({ returnUrl }) {
                 rootClassName={styles.login}
               />
             )}
-          </DebouncingValidatingField>
-          <Field name="password" validate={password}>
+          </Field>
+          <Field
+            name="password"
+            validate={value => isEmpty(value, "Can't be empty")}
+          >
             {({ input, meta }) => (
               <Input
                 {...input}

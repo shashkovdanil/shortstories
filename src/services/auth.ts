@@ -13,8 +13,6 @@ export async function authenticateUser(
   const cookieStore = cookies()
   const token = cookieStore.get('token')
 
-  console.log('ttttoookkkeen', token)
-
   if (!token) return null
 
   const { userId } = jwt.verify(

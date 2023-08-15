@@ -1,26 +1,29 @@
-import React, { Component } from 'react'
+'use client'
+
+import React, { useRef } from 'react'
 import { Field } from 'react-final-form'
 
-class DebouncingValidatingField extends Component {
-  static defaultProps = {
-    debounce: 400,
-  }
+function DebouncingValidatingField(props) {
+  const timeoutRef = useRef(null)
 
-  validate = (...args) =>
-    new Promise(resolve => {
-      if (this.clearTimeout) this.clearTimeout()
+  function validate(...args) {
+    return new Promise(resolve => {
+      if (timeoutRef.current) {
+        timeoutRef.current()
+      }
+
       const timerId = setTimeout(() => {
-        resolve(this.props.validate(...args))
-      }, this.props.debounce)
-      this.clearTimeout = () => {
+        resolve(props.validate(...args))
+      }, 400)
+
+      timeoutRef.current = () => {
         clearTimeout(timerId)
         resolve()
       }
     })
-
-  render() {
-    return <Field {...this.props} validate={this.validate} />
   }
+
+  return <Field {...props} validate={validate} />
 }
 
 export default DebouncingValidatingField
