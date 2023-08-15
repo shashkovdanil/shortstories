@@ -1,7 +1,7 @@
 import { meFragment } from '@/graphql/fragments'
 import { RESET_PASSWORD_MUTATION } from '@/graphql/mutations'
 import { useMutation } from '@apollo/client'
-import Router from 'next/router'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 import { Field, Form } from 'react-final-form'
 
@@ -20,12 +20,13 @@ function ResetPasswordForm({ token }) {
       })
     },
   })
+  const router = useRouter()
 
   return (
     <Form
       onSubmit={async values => {
         await reset({ variables: { ...values, token } })
-        Router.push('/')
+        router.push('/')
       }}
       render={({ handleSubmit, submitting, values }) => (
         <form className={authFormStyles.form} onSubmit={handleSubmit}>

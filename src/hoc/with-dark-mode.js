@@ -1,4 +1,7 @@
+'use client'
+
 import React, { useState } from 'react'
+
 import { DarkModeHeader } from '../components'
 
 function withDarkMode(Component) {

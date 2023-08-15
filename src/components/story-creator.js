@@ -1,10 +1,12 @@
+'use client'
+
 import { CREATE_STORY_MUTATION } from '@/graphql/mutations'
 import { GENRES_QUERY, USER_QUERY } from '@/graphql/queries'
 import { useMutation } from '@apollo/client'
 import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr'
 import cn from 'classnames'
 import Head from 'next/head'
-import Router from 'next/router'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 import { Field, Form } from 'react-final-form'
 import ReactTextareaAutosize from 'react-textarea-autosize'
@@ -16,6 +18,7 @@ import storyStyles from './styles/story.module.css'
 import styles from './styles/story-creator.module.css'
 
 function StoryCreator({ mode, theme, userId }) {
+  const router = useRouter()
   const {
     data: { genres = [] },
   } = useSuspenseQuery(GENRES_QUERY)
@@ -38,7 +41,7 @@ function StoryCreator({ mode, theme, userId }) {
             title: values.title,
           },
         })
-        Router.push('/')
+        router.push('/')
       }}
       render={({ form, handleSubmit, submitting }) => (
         <div

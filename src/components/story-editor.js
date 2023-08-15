@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client'
 import cn from 'classnames'
-import Router from 'next/router'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 import { Field, Form } from 'react-final-form'
 import ReactTextareaAutosize from 'react-textarea-autosize'
@@ -22,6 +22,7 @@ function StoryEditor({ genres, id, mode, story, theme, userId }) {
       { query: USER_QUERY, variables: { id: userId } },
     ],
   })
+  const router = useRouter()
 
   return (
     <Form
@@ -39,7 +40,7 @@ function StoryEditor({ genres, id, mode, story, theme, userId }) {
             title: values.title,
           },
         })
-        Router.push('/me')
+        router.push('/me')
       }}
       render={({ form, handleSubmit, submitting }) => (
         <div

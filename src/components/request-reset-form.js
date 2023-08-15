@@ -3,7 +3,7 @@ import {
   REQUEST_RESET_MUTATION,
 } from '@/graphql/mutations'
 import { useMutation } from '@apollo/client'
-import Router from 'next/router'
+import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import { Form } from 'react-final-form'
 
@@ -15,6 +15,7 @@ import styles from './styles/request-reset-form.module.css'
 
 function RequestResetForm() {
   const [email, setEmail] = useState('')
+  const router = useRouter()
 
   const [requestReset, { error, loading }] = useMutation(
     REQUEST_RESET_MUTATION,
@@ -22,6 +23,9 @@ function RequestResetForm() {
       fetchPolicy: 'no-cache',
     },
   )
+  const [checkUserExists] = useMutation(CHECK_USER_EXIST_MUTATION, {
+    fetchPolicy: 'no-cache',
+  })
 
   return (
     <Form
@@ -35,7 +39,7 @@ function RequestResetForm() {
         <form className={authFormStyles.form} onSubmit={handleSubmit}>
           <button
             onClick={() => {
-              Router.back()
+              router.back()
             }}
             className={authFormStyles.back}
             type="button"
@@ -54,29 +58,21 @@ function RequestResetForm() {
             </div>
           ) : (
             <>
-              <Mutation
-                fetchPolicy="no-cache"
-                mutation={CHECK_USER_EXIST_MUTATION}
+              <DebouncingValidatingField
+                name="login"
+                validate={value => login(value, checkUserExists)}
               >
-                {checkUserExist => (
-                  <DebouncingValidatingField
+                {({ input, meta }) => (
+                  <Input
+                    {...input}
+                    error={meta.error && meta.touched && meta.error}
+                    label="Логин"
                     name="login"
-                    validate={value => login(value, checkUserExist)}
-                  >
-                    {({ input, meta }) => (
-                      <Input
-                        {...input}
-                        error={meta.error && meta.touched && meta.error}
-                        label="Логин"
-                        name="login"
-                        rootClassName={styles.login}
-                        type="text"
-                      />
-                    )}
-                  </DebouncingValidatingField>
+                    rootClassName={styles.login}
+                    type="text"
+                  />
                 )}
-              </Mutation>
-
+              </DebouncingValidatingField>
               <div className={authFormStyles['button-wrapper']}>
                 <Button className={styles['back-button']} onClick={Router.back}>
                   Назад

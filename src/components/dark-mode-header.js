@@ -1,20 +1,16 @@
 import cn from 'classnames'
-import Router from 'next/router'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 
 import Logo from './logo'
 import styles from './styles/dark-mode-header.module.css'
 
 function DarkModeHeader({ mode, setMode }) {
+  const router = useRouter()
+
   return (
     <header className={cn(styles.header, { [styles.dark]: mode === 'dark' })}>
-      <button
-        onClick={() => {
-          Router.back()
-        }}
-        className={styles.back}
-        type="button"
-      >
+      <button className={styles.back} onClick={router.back} type="button">
         <svg
           height="400.004"
           viewBox="0 0 400.004 400.004"

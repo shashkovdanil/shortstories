@@ -2,27 +2,22 @@ import slugify from '@sindresorhus/slugify'
 import cn from 'classnames'
 import format from 'date-fns/format'
 import ru from 'date-fns/locale/ru'
-import Router from 'next/router'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 
 import { getPhoto } from '../lib/helpers'
 import styles from './styles/user-with-date.module.css'
 
-function routeToUserPage(event, user) {
-  event.stopPropagation()
-  Router.push(
-    `/user?id=${user.id}`,
-    `/user/${user.id}-${slugify(user.username)}`,
-  ).then(() => {
-    window.scrollTo(0, 0)
-  })
-}
-
 function UserWithDate({ className = '', date, user }) {
+  const router = useRouter()
+
   return (
     <div
       onClick={event => {
-        routeToUserPage(event, user)
+        event.stopPropagation()
+        router.push(`/user/${user.id}-${slugify(user.username)}`, {
+          scroll: false,
+        })
       }}
       className={cn('author', styles.wrapper, className)}
       role="link"

@@ -1,4 +1,7 @@
+'use client'
+
 import React, { useEffect } from 'react'
+
 import Meta from './meta'
 
 function Page({ children }) {

@@ -1,7 +1,7 @@
 import { meFragment } from '@/graphql/fragments'
 import { useMutation } from '@apollo/client'
 import Link from 'next/link'
-import Router from 'next/router'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 import { Field, Form } from 'react-final-form'
 
@@ -21,6 +21,7 @@ import authFormStyles from './styles/auth-form.module.css'
 import styles from './styles/signup-form.module.css'
 
 function SignupForm() {
+  const router = useRouter()
   const [checkUserExists] = useMutation(CHECK_USER_EXIST_MUTATION, {
     fetchPolicy: 'no-cache',
   })
@@ -38,7 +39,7 @@ function SignupForm() {
     <Form
       onSubmit={async values => {
         await signUp({ variables: { ...values } })
-        Router.push('/')
+        router.push('/')
       }}
       render={({ handleSubmit, submitting, values }) => (
         <form className={authFormStyles.form} onSubmit={handleSubmit}>

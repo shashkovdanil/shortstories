@@ -3,7 +3,7 @@ import { USER_QUERY } from '@/graphql/queries'
 import { useMutation } from '@apollo/client'
 import slugify from '@sindresorhus/slugify'
 import cn from 'classnames'
-import Router from 'next/router'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 import readingTime from 'reading-time'
 
@@ -28,6 +28,8 @@ function ItemStories({
   title,
   user,
 }) {
+  const router = useRouter()
+
   const hasLike = me ? stats.likes.some(l => l && l.id === me.id) : false
   const hasDislike = me ? stats.dislikes.some(d => d && d.id === me.id) : false
   const hasView = me ? stats.views.some(v => v && v.id === me.id) : false
@@ -45,11 +47,9 @@ function ItemStories({
   return (
     <article
       onClick={() => {
-        Router.push(`/story?id=${id}`, `/story/${id}-${slugify(title)}`).then(
-          () => {
-            window.scrollTo(0, 0)
-          },
-        )
+        router.push(`/story?id=${id}`, `/story/${id}-${slugify(title)}`, {
+          scroll: false,
+        })
       }}
       className={styles.wrapper}
     >

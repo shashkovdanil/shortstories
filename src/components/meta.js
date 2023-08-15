@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { withRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
 import React from 'react'
 
 const pageWithCustomMeta = ['/story', '/create-story']
@@ -13,7 +13,7 @@ const shareImage = 'https://shortstories.io/images/share.png'
 const favicon = '/icons/favicon.png'
 
 function Meta({ router }) {
-  const page = router.pathname
+  const page = usePathname()
   return (
     <Head>
       <meta
@@ -58,4 +58,4 @@ function Meta({ router }) {
   )
 }
 
-export default withRouter(Meta)
+export default Meta

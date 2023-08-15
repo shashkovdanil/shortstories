@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { useEffect } from 'react'
 
 import Nav from './nav'
 import styles from './styles/header.module.css'

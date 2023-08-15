@@ -1,5 +1,5 @@
 import cn from 'classnames'
-import React, { useEffect, useState } from 'react'
+import { usePathname } from 'next/navigation'
 
 import ShareButton from './share-button'
 import styles from './styles/footer.module.css'
@@ -7,10 +7,8 @@ import styles from './styles/footer.module.css'
 const title = 'Shortstories. Стань лучшим автором'
 
 function Footer({ className = '' }) {
-  const [origin, setOrigin] = useState(null)
-  useEffect(() => {
-    setOrigin(window.location.origin)
-  }, [origin])
+  const pathname = usePathname()
+
   return (
     <footer className={cn(styles.footer, className)}>
       <div className={styles.bar}>
@@ -33,17 +31,17 @@ function Footer({ className = '' }) {
             title="Группа ВК"
           />
           <ShareButton
-            href={`https://twitter.com/intent/tweet/?text=${title}&url=${origin}`}
+            href={`https://twitter.com/intent/tweet/?text=${title}&url=${pathname}`}
             icon="/images/icons/twitter.svg"
             title="Поделиться в Twitter"
           />
           <ShareButton
-            href={`https://telegram.me/share/url?url=${origin}&text=${title}&utm_source=share2`}
+            href={`https://telegram.me/share/url?url=${pathname}&text=${title}&utm_source=share2`}
             icon="/images/icons/telegram.svg"
             title="Поделиться в Telegram"
           />
           <ShareButton
-            href={`https://www.facebook.com/sharer/sharer.php?u=${origin}&t=${title}`}
+            href={`https://www.facebook.com/sharer/sharer.php?u=${pathname}&t=${title}`}
             icon="/images/icons/fb.svg"
             title="Поделиться в Facebook"
           />

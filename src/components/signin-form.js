@@ -5,7 +5,7 @@ import {
 } from '@/graphql/mutations'
 import { useMutation } from '@apollo/client'
 import Link from 'next/link'
-import Router from 'next/router'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 import { Field, Form } from 'react-final-form'
 
@@ -28,13 +28,14 @@ function SigninForm({ returnUrl }) {
   const [checkUserExists] = useMutation(CHECK_USER_EXIST_MUTATION, {
     fetchPolicy: 'no-cache',
   })
+  const router = useRouter()
 
   return (
     <Form
       onSubmit={values => {
         signIn({ variables: { ...values } }).then(() => {
           if (returnUrl) {
-            Router.replace(`/${returnUrl}`)
+            router.replace(`/${returnUrl}`)
             return
           }
           Router.push('/')
@@ -84,15 +85,14 @@ function SigninForm({ returnUrl }) {
               Войти
             </Button>
           </div>
-          <Link href="/request-reset">
-            <a className={authFormStyles['forgotten-link']}>Забыли пароль?</a>
+          <Link
+            className={authFormStyles['forgotten-link']}
+            href="/request-reset"
+          >
+            Забыли пароль?
           </Link>
           <p className={authFormStyles['signup-link']}>
-            Нет аккаунта?{' '}
-            <Link href="/signup">
-              <a>Зарегистрируйте</a>
-            </Link>
-            .
+            Нет аккаунта? <Link href="/signup">Зарегистрируйте</Link>.
           </p>
         </form>
       )}
