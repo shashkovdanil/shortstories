@@ -1,13 +1,14 @@
+'use client'
+
+import { EDIT_STORY_MUTATION } from '@/graphql/mutations'
+import { USER_QUERY } from '@/graphql/queries'
 import { useMutation } from '@apollo/client'
 import cn from 'classnames'
 import { useRouter } from 'next/navigation'
-import React from 'react'
 import { Field, Form } from 'react-final-form'
 import ReactTextareaAutosize from 'react-textarea-autosize'
 
 import { Button, ErrorMessage, GenreSelect } from '.'
-import { EDIT_STORY_MUTATION } from '../../src/lib/mutations'
-import { USER_QUERY } from '../../src/lib/queries'
 import { isEmpty, storyLength, withoutGenre } from '../../src/lib/validators'
 import withDarkMode from '../hoc/with-dark-mode'
 import storyStyles from './styles/story.module.css'

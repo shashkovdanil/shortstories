@@ -58,11 +58,8 @@ function ItemStories({
           <button
             onClick={event => {
               event.stopPropagation()
-              Router.push(
-                `/edit-story?id=${id}`,
-                `/edit-story/${id}-${slugify(title)}`,
-              ).then(() => {
-                window.scrollTo(0, 0)
+              router.push(`/edit-story/${id}`, {
+                scroll: false,
               })
             }}
             type="button"
