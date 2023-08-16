@@ -8,7 +8,7 @@ import styles from './styles/main-stories.module.css'
 function MainStories({ error, fetchMore, loading, me, stories }) {
   if (loading) return <BigLoader />
   if (error) return <ErrorMessage error={error} />
-  if (!stories.edges.length)
+  if (!stories?.edges?.length)
     return (
       <div>
         <h2 className={styles['no-stories']}>Нет рассказов :(</h2>

@@ -15,16 +15,13 @@ export async function authenticateUser(
 
   if (!token) return null
 
-  const { userId } = jwt.verify(
-    token.value,
-    process.env.SECRET as string,
-  ) as JwtPayload
+  const { email } = jwt.verify(token.value, process.env.SECRET) as JwtPayload
 
-  if (!userId) return null
+  if (!email) return null
 
   const user = await prisma.users.findUnique({
     where: {
-      id: userId,
+      email,
     },
   })
 

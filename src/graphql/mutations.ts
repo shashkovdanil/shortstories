@@ -36,6 +36,22 @@ export const SIGN_IN_MUTATION = gql(/* GraphQL */ `
   }
 `)
 
+export const SEND_MAGIC_LINK_MUTATION = gql(/* GraphQL */ `
+  mutation SEND_MAGIC_LINK_MUTATION($email: String!) {
+    sendMagicLink(email: $email) {
+      message
+    }
+  }
+`)
+
+export const MAGIC_LINK_MUTATION_AUTH = gql(/* GraphQL */ `
+  mutation MAGIC_LINK_MUTATION_AUTH($token: String!) {
+    magicLinkAuth(token: $token) {
+      ...me
+    }
+  }
+`)
+
 export const SIGN_UP_MUTATION = gql(/* GraphQL */ `
   mutation SIGN_UP_MUTATION(
     $username: String!

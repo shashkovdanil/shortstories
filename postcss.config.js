@@ -1,3 +1,4 @@
+/* eslint-disable perfectionist/sort-objects */
 module.exports = {
   plugins: {
     autoprefixer: {},
@@ -5,7 +6,7 @@ module.exports = {
       extensions: ['.css'],
     },
     'postcss-global-import': {},
-    'postcss-nested': {},
+    'tailwindcss/nesting': {},
     tailwindcss: {},
   },
 }

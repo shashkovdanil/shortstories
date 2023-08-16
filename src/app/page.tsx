@@ -1,9 +1,10 @@
 'use client'
 
-import { MainStories, Modal, SettingsSort, Wrapper } from '@/components'
+import { Footer, Header, MainStories, Modal, SettingsSort } from '@/components'
 import { INDEX_QUERY } from '@/graphql/queries'
 import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr'
 import cn from 'classnames'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 
@@ -33,44 +34,51 @@ export default function IndexPage() {
     error,
     fetchMore,
   } = useSuspenseQuery(INDEX_QUERY, {
+    fetchPolicy: 'no-cache',
     variables,
   })
 
   return (
     <>
-      <div className={styles['seo-block']}>
-        <div className={styles.inner}>
-          <div className={styles.text}>
-            <h1>Здесь вы можете читать рассказы свободных писателей</h1>
-            <p>
-              Откройте для себя новых авторов или{' '}
-              <Link className={styles.link} href="/create-story">
-                продемонстрируйте
-              </Link>{' '}
-              талант и станьте лучшим
-            </p>
-            <p>
-              Для удобства чтения{' '}
-              <button
-                onClick={() => {
-                  setOpen(true)
-                }}
-                className={cn(styles['settings-button'], styles.link)}
-                type="button"
-              >
-                настройте
-              </button>{' '}
-              ленту
-            </p>
-          </div>
-          <div className={styles.writer}>
-            <Link href="/create-story">
-              <img alt="" src="/images/writer.svg" />
-            </Link>
+      <Header />
+      <main>
+        <div className="mb-12 bg-slate-100 py-12">
+          <div className={styles.inner}>
+            <div className={styles.text}>
+              <h1 className="text-balance font-bold">
+                Here you can read short stories by freelance writers
+              </h1>
+              <p className="text-balance">
+                Discover new authors or{' '}
+                <Link className={styles.link} href="/create-story">
+                  showcase your talent
+                </Link>
+              </p>
+              <p className="text-balance">
+                <button
+                  onClick={() => {
+                    setOpen(true)
+                  }}
+                  className={cn(styles['settings-button'], styles.link)}
+                  type="button"
+                >
+                  Customize
+                </button>{' '}
+                the feed for easy reading
+              </p>
+            </div>
+            <div className="hidden flex-1 items-center justify-center md:flex">
+              <Link aria-label="Go to Write Story page" href="/create-story">
+                <Image
+                  alt="Write Story"
+                  height={100}
+                  src="/images/writer.svg"
+                  width={100}
+                />
+              </Link>
+            </div>
           </div>
         </div>
-      </div>
-      <Wrapper isIndex me={me}>
         <MainStories
           error={error}
           fetchMore={fetchMore}
@@ -78,7 +86,9 @@ export default function IndexPage() {
           me={me}
           stories={stories}
         />
-      </Wrapper>
+      </main>
+
+      <Footer />
       {isOpen && (
         <Modal
           onClose={() => {

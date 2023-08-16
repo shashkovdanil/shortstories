@@ -133,6 +133,8 @@ export const schema = gql`
       x: Float!
       y: Float!
     ): Me!
+    sendMagicLink(email: String!): SuccessMessage
+    magicLinkAuth(token: String!): Me!
 
     # Story
     createStory(title: String!, body: String!, genreId: Int!): Story!

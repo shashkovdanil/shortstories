@@ -13,7 +13,6 @@ export default function MePage() {
     data: { me },
   } = useSuspenseQuery(CHECK_LOGGED_IN_QUERY)
 
-  console.log(me?.id)
   const { data, error, fetchMore } = useSuspenseQuery(ME_QUERY, {
     skip: !me,
     variables: { userId: me?.id },
@@ -24,8 +23,6 @@ export default function MePage() {
   }
 
   if (!data) return null
-
-  console.log(data)
 
   return (
     <Wrapper innerClassName={styles.wrapper} me={data.me}>

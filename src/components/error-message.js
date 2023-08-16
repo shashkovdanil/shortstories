@@ -12,8 +12,8 @@ function ErrorMessage({ error = {} }) {
     return error.networkError.result.errors.map((error, index) => (
       <div className={styles.error} key={index}>
         <p>
-          <strong>Ошибка!</strong>
-          {error.message.replace('GraphQL error: ', '')}
+          <strong>Error!</strong>
+          {error.extensions.message}
         </p>
       </div>
     ))

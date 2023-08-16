@@ -52,9 +52,11 @@ export type Mutation = {
   deleteStory: Story;
   dislikeStory: Reaction;
   likeStory: Reaction;
+  magicLinkAuth: Me;
   postPhoto: Me;
   requestReset?: Maybe<RequestReset>;
   resetPassword: Me;
+  sendMagicLink?: Maybe<SuccessMessage>;
   signIn: Me;
   signOut?: Maybe<SuccessMessage>;
   signUp: Me;
@@ -107,6 +109,11 @@ export type MutationLikeStoryArgs = {
 };
 
 
+export type MutationMagicLinkAuthArgs = {
+  token: Scalars['String']['input'];
+};
+
+
 export type MutationPostPhotoArgs = {
   file: Scalars['Upload']['input'];
   height: Scalars['Float']['input'];
@@ -125,6 +132,11 @@ export type MutationResetPasswordArgs = {
   password: Scalars['String']['input'];
   passwordConfirmation: Scalars['String']['input'];
   token: Scalars['String']['input'];
+};
+
+
+export type MutationSendMagicLinkArgs = {
+  email: Scalars['String']['input'];
 };
 
 
@@ -443,9 +455,11 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   deleteStory?: Resolver<ResolversTypes['Story'], ParentType, ContextType, RequireFields<MutationDeleteStoryArgs, 'id'>>;
   dislikeStory?: Resolver<ResolversTypes['Reaction'], ParentType, ContextType, RequireFields<MutationDislikeStoryArgs, 'id'>>;
   likeStory?: Resolver<ResolversTypes['Reaction'], ParentType, ContextType, RequireFields<MutationLikeStoryArgs, 'id'>>;
+  magicLinkAuth?: Resolver<ResolversTypes['Me'], ParentType, ContextType, RequireFields<MutationMagicLinkAuthArgs, 'token'>>;
   postPhoto?: Resolver<ResolversTypes['Me'], ParentType, ContextType, RequireFields<MutationPostPhotoArgs, 'file' | 'height' | 'width' | 'x' | 'y'>>;
   requestReset?: Resolver<Maybe<ResolversTypes['RequestReset']>, ParentType, ContextType, RequireFields<MutationRequestResetArgs, 'login'>>;
   resetPassword?: Resolver<ResolversTypes['Me'], ParentType, ContextType, RequireFields<MutationResetPasswordArgs, 'password' | 'passwordConfirmation' | 'token'>>;
+  sendMagicLink?: Resolver<Maybe<ResolversTypes['SuccessMessage']>, ParentType, ContextType, RequireFields<MutationSendMagicLinkArgs, 'email'>>;
   signIn?: Resolver<ResolversTypes['Me'], ParentType, ContextType, RequireFields<MutationSignInArgs, 'login' | 'password'>>;
   signOut?: Resolver<Maybe<ResolversTypes['SuccessMessage']>, ParentType, ContextType>;
   signUp?: Resolver<ResolversTypes['Me'], ParentType, ContextType, RequireFields<MutationSignUpArgs, 'email' | 'password' | 'username'>>;

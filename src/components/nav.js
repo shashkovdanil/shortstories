@@ -1,16 +1,21 @@
+import { ONLY_ME_QUERY } from '@/graphql/queries'
+import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr'
 import Link from 'next/link'
-import React from 'react'
 
 import Signout from './signout'
 import styles from './styles/nav.module.css'
 
-function Nav({ me }) {
-  const isLoggedIn = !!me
+export default function Nav() {
+  const {
+    data: { me },
+  } = useSuspenseQuery(ONLY_ME_QUERY)
+
+  const isLoggedIn = me !== null
+
   return (
     <>
       <div className={styles['mobile-menu']}>
         <input className={styles.checkbox} id="toggle" type="checkbox" />
-        {/* eslint-disable-next-line */}
         <label className={styles.button} htmlFor="toggle">
           <span className={styles.icon}>&nbsp;</span>
         </label>
@@ -75,5 +80,3 @@ function Nav({ me }) {
     </>
   )
 }
-
-export default Nav

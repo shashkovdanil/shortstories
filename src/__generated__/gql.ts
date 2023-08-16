@@ -23,6 +23,8 @@ const documents = {
     "\n  mutation POST_PHOTO_MUTATION(\n    $file: Upload!\n    $width: Float!\n    $height: Float!\n    $x: Float!\n    $y: Float!\n  ) {\n    postPhoto(file: $file, width: $width, height: $height, x: $x, y: $y) {\n      photo\n    }\n  }\n": types.Post_Photo_MutationDocument,
     "\n  mutation CHECK_USER_EXIST_MUTATION($login: String!) {\n    checkUserExists(login: $login)\n  }\n": types.Check_User_Exist_MutationDocument,
     "\n  mutation SIGN_IN_MUTATION($login: String!, $password: String!) {\n    signIn(login: $login, password: $password) {\n      ...me\n    }\n  }\n": types.Sign_In_MutationDocument,
+    "\n  mutation SEND_MAGIC_LINK_MUTATION($email: String!) {\n    sendMagicLink(email: $email) {\n      message\n    }\n  }\n": types.Send_Magic_Link_MutationDocument,
+    "\n  mutation MAGIC_LINK_MUTATION_AUTH($token: String!) {\n    magicLinkAuth(token: $token) {\n      ...me\n    }\n  }\n": types.Magic_Link_Mutation_AuthDocument,
     "\n  mutation SIGN_UP_MUTATION(\n    $username: String!\n    $email: String!\n    $password: String!\n  ) {\n    signUp(username: $username, email: $email, password: $password) {\n      ...me\n    }\n  }\n": types.Sign_Up_MutationDocument,
     "\n  mutation REQUEST_RESET_MUTATION($login: String!) {\n    requestReset(login: $login) {\n      email\n    }\n  }\n": types.Request_Reset_MutationDocument,
     "\n  mutation RESET_PASSWORD_MUTATION(\n    $token: String!\n    $password: String!\n    $passwordConfirmation: String!\n  ) {\n    resetPassword(\n      token: $token\n      password: $password\n      passwordConfirmation: $passwordConfirmation\n    ) {\n      ...me\n    }\n  }\n": types.Reset_Password_MutationDocument,
@@ -101,6 +103,14 @@ export function gql(source: "\n  mutation CHECK_USER_EXIST_MUTATION($login: Stri
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  mutation SIGN_IN_MUTATION($login: String!, $password: String!) {\n    signIn(login: $login, password: $password) {\n      ...me\n    }\n  }\n"): (typeof documents)["\n  mutation SIGN_IN_MUTATION($login: String!, $password: String!) {\n    signIn(login: $login, password: $password) {\n      ...me\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  mutation SEND_MAGIC_LINK_MUTATION($email: String!) {\n    sendMagicLink(email: $email) {\n      message\n    }\n  }\n"): (typeof documents)["\n  mutation SEND_MAGIC_LINK_MUTATION($email: String!) {\n    sendMagicLink(email: $email) {\n      message\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  mutation MAGIC_LINK_MUTATION_AUTH($token: String!) {\n    magicLinkAuth(token: $token) {\n      ...me\n    }\n  }\n"): (typeof documents)["\n  mutation MAGIC_LINK_MUTATION_AUTH($token: String!) {\n    magicLinkAuth(token: $token) {\n      ...me\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

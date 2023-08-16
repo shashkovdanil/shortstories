@@ -7,7 +7,7 @@ import {
 import { isAuthenticated } from '@/services/auth'
 import { type GraphQLContext } from '@/services/context'
 import { GraphQLError } from 'graphql'
-import jwt from 'jsonwebtoken'
+import jwt, { JsonWebTokenError, JwtPayload } from 'jsonwebtoken'
 import { nanoid } from 'nanoid'
 import { cookies } from 'next/headers'
 
@@ -15,8 +15,10 @@ type Mutation = MutationResolvers<GraphQLContext>
 
 type UsersMutations = {
   checkUserExists: Mutation['checkUserExists']
+  magicLinkAuth: Mutation['magicLinkAuth']
   requestReset: Mutation['requestReset']
   resetPassword: Mutation['resetPassword']
+  sendMagicLink: Mutation['sendMagicLink']
   signIn: Mutation['signIn']
   signOut: Mutation['signOut']
   signUp: Mutation['signUp']
@@ -42,6 +44,71 @@ export const mutations: UsersMutations = {
     })
 
     return !!user
+  },
+  magicLinkAuth: async (_, { token }, ctx) => {
+    try {
+      const { email } = jwt.verify(token, process.env.SECRET) as JwtPayload
+
+      let user = await ctx.prisma.users.findUnique({
+        where: {
+          email,
+        },
+      })
+
+      if (!user) {
+        user = await ctx.prisma.users.create({
+          data: {
+            email,
+            isVerified: true,
+            password: '',
+            username: email.split('@')[0],
+            verifyToken: null,
+            verifyTokenExpiry: null,
+          },
+        })
+      }
+
+      cookies().set('token', token, {
+        httpOnly: true,
+        maxAge: 100 * 60 * 60 * 24 * 365,
+      })
+
+      return user
+    } catch (e) {
+      if (e instanceof JsonWebTokenError) {
+        if (e.name === 'TokenExpiredError') {
+          throw new GraphQLError(`TokenExpiredError`, {
+            extensions: {
+              code: 'TOKEN_EXPIRED',
+              http: {
+                status: 401,
+              },
+              message: `Token expired. Try to sign in again`,
+            },
+          })
+        } else if (e.name === 'JsonWebTokenError') {
+          throw new GraphQLError(`JsonWebTokenError`, {
+            extensions: {
+              code: 'INVALID_TOKEN',
+              http: {
+                status: 401,
+              },
+              message: `Invalid token. Try to sign in again`,
+            },
+          })
+        }
+      }
+
+      throw new GraphQLError(`JsonWebTokenError`, {
+        extensions: {
+          code: 'UNAUTHORIZED',
+          http: {
+            status: 401,
+          },
+          message: `Cannot verify user. Try to sign in again`,
+        },
+      })
+    }
   },
   requestReset: async (_, { login }, ctx) => {
     const user = await ctx.prisma.users.findFirst({
@@ -148,6 +215,51 @@ export const mutations: UsersMutations = {
     })
 
     return updatedUser
+  },
+  sendMagicLink: async (_, { email }) => {
+    const cookieStore = cookies()
+    const lastMagicSentCookie = cookieStore.get('lastMagicSent')
+
+    if (lastMagicSentCookie) {
+      const lastMagicSent = parseInt(lastMagicSentCookie.value, 10)
+
+      if (Date.now() - lastMagicSent < 60000) {
+        throw new GraphQLError(
+          `You can request magic link only once per minute`,
+          {
+            extensions: {
+              code: 'BAD_REQUEST',
+              http: {
+                status: 429,
+              },
+              message: `You can request magic link only once per minute`,
+            },
+          },
+        )
+      }
+    }
+
+    const token = jwt.sign({ email }, process.env.SECRET, {
+      expiresIn: '1h',
+    })
+
+    await sendMail({
+      subject: 'Magic Link Auth',
+      text: `Click on the link below to login in Shortstories
+      \n\n
+      <br />
+      <a href="${process.env.NEXT_PUBLIC_FRONTEND_URL}/confirm/${token}">Click here</a>`,
+      to: email,
+    })
+
+    cookieStore.set('lastMagicSent', Date.now().toString(), {
+      expires: new Date(Date.now() + 60000),
+      httpOnly: true,
+    })
+
+    return {
+      message: 'Success',
+    }
   },
   signIn: async (_, { login, password }, ctx) => {
     const user = await ctx.prisma.users.findFirst({

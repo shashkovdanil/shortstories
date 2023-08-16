@@ -1,8 +1,8 @@
 'use client'
 
 import { CREATE_STORY_MUTATION } from '@/graphql/mutations'
-import { GENRES_QUERY, USER_QUERY } from '@/graphql/queries'
-import { useMutation } from '@apollo/client'
+import { GENRES_QUERY, ME_QUERY, USER_QUERY } from '@/graphql/queries'
+import { useApolloClient, useMutation } from '@apollo/client'
 import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr'
 import cn from 'classnames'
 import Head from 'next/head'
@@ -18,6 +18,7 @@ import storyStyles from './styles/story.module.css'
 import styles from './styles/story-creator.module.css'
 
 function StoryCreator({ mode, theme, userId }) {
+  const client = useApolloClient()
   const router = useRouter()
   const {
     data: { genres = [] },
@@ -25,9 +26,14 @@ function StoryCreator({ mode, theme, userId }) {
   const [createStory, { error, loading }] = useMutation(CREATE_STORY_MUTATION, {
     awaitRefetchQueries: true,
     refetchQueries: [
-      'INDEX_QUERY',
-      'ME_QUERY',
-      { query: USER_QUERY, variables: { id: userId } },
+      {
+        query: USER_QUERY,
+        variables: { id: userId },
+      },
+      {
+        query: ME_QUERY,
+        variables: { userId },
+      },
     ],
   })
 
@@ -41,7 +47,8 @@ function StoryCreator({ mode, theme, userId }) {
             title: values.title,
           },
         })
-        router.push('/')
+
+        // router.push('/')
       }}
       render={({ form, handleSubmit, submitting }) => (
         <div
@@ -131,7 +138,7 @@ function StoryCreator({ mode, theme, userId }) {
                 </div>
               )}
             </Field>
-            <Field name="body" validate={storyLength}>
+            <Field name="body">
               {({ input, meta }) => (
                 <div className={storyStyles.body}>
                   <ReactTextareaAutosize

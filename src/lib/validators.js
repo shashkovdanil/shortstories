@@ -28,12 +28,9 @@ export const username = async (value, check) => {
 }
 
 export const isEmail = async (value, check) => {
-  if (!value) return 'Введите имэйл'
+  if (!value) return 'Enter email'
   if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value))
-    return 'Некорректный имэйл'
-  const { data } = await checkUnique(value, check)
-
-  if (data.checkUserExists) return 'Имэйл занят'
+    return 'Incorrect email'
 }
 
 export const password = value => {
