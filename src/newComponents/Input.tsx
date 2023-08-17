@@ -27,16 +27,16 @@ export const Input = forwardRef<HTMLInputElement, Props>(
   ({ id, label, validation, ...rest }, ref) => {
     const errorId = useMemo(() => `${id}-error`, [id])
     const errorAttributes = useMemo(() => {
-      let errorAttributes: ErrorInputAttributes = {}
+      let attributes: ErrorInputAttributes = {}
 
       if (validation?.error) {
-        errorAttributes = {
+        attributes = {
           'aria-describedby': errorId,
           'aria-invalid': true,
         }
       }
 
-      return errorAttributes
+      return attributes
     }, [validation, errorId])
 
     return (

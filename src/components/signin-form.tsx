@@ -81,7 +81,7 @@ function SigninForm({ returnUrl }: Props) {
           placeholder="example@mail.com"
           type="email"
         />
-        <Button full type="submit">
+        <Button full loading={loading} type="submit">
           Send magic link
         </Button>
       </form>
