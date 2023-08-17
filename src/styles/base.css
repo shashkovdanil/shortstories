@@ -16,10 +16,6 @@
   font-display: swap;
 }
 
-:root {
-  font-size: 10px;
-}
-
 html {
   box-sizing: border-box;
   font-family: Noah, system-ui;
@@ -31,7 +27,6 @@ html {
 *::after {
   box-sizing: inherit;
   background-repeat: no-repeat;
-  outline: 0;
 }
 
 body {

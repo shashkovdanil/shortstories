@@ -1,4 +1,7 @@
 import { SEND_MAGIC_LINK_MUTATION } from '@/graphql/mutations'
+import { Button } from '@/newComponents/Button'
+import { Input } from '@/newComponents/Input'
+import { Logo } from '@/newComponents/Logo'
 import { useMutation } from '@apollo/client'
 import { valibotResolver } from '@hookform/resolvers/valibot'
 import cn from 'classnames'
@@ -8,9 +11,8 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import { email, object, string } from 'valibot'
 
-import { Button, ErrorMessage, Input, Logo } from '.'
+import { ErrorMessage } from '.'
 import authFormStyles from './styles/auth-form.module.css'
-import styles from './styles/signin-form.module.css'
 
 type Props = {
   returnUrl?: string
@@ -25,7 +27,7 @@ function SigninForm({ returnUrl }: Props) {
     formState: { errors },
     handleSubmit,
     register,
-  } = useForm({
+  } = useForm<typeof schema.types.output>({
     resolver: valibotResolver(schema),
   })
 
@@ -48,7 +50,7 @@ function SigninForm({ returnUrl }: Props) {
   })
 
   return (
-    <form className={cn(authFormStyles.form)} noValidate onSubmit={onSubmit}>
+    <div className={cn(authFormStyles.form)}>
       <button
         onClick={() => {
           router.back()
@@ -63,23 +65,27 @@ function SigninForm({ returnUrl }: Props) {
           width={28}
         />
       </button>
-      <Logo />
+      <div className="mb-8 flex justify-center">
+        <Logo />
+      </div>
       <ErrorMessage error={error} />
-      <Input
-        {...register('email')}
-        error={errors.email?.message}
-        inputmode="email"
-        label="E-mail"
-        name="email"
-        rootClassName={styles.login}
-        type="email"
-      />
-      <div className={authFormStyles['button-with-error']}>
-        <Button black loading={loading} type="submit">
+      <form noValidate onSubmit={onSubmit}>
+        <Input
+          {...register('email')}
+          validation={{
+            error: errors.email?.message,
+          }}
+          id="email"
+          inputMode="email"
+          label="Email"
+          placeholder="example@mail.com"
+          type="email"
+        />
+        <Button full type="submit">
           Send magic link
         </Button>
-      </div>
-    </form>
+      </form>
+    </div>
   )
 }
 

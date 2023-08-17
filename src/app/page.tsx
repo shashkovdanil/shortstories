@@ -2,6 +2,7 @@
 
 import { Footer, Header, MainStories, Modal, SettingsSort } from '@/components'
 import { INDEX_QUERY } from '@/graphql/queries'
+import { Input } from '@/newComponents/Input'
 import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr'
 import cn from 'classnames'
 import Image from 'next/image'
