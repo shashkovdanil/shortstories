@@ -10,24 +10,28 @@ export async function authenticateUser(
   prisma: PrismaClient,
   req: NextRequest,
 ): Promise<Users | null> {
-  const cookieStore = cookies()
-  const token = cookieStore.get('token')
+  try {
+    const cookieStore = cookies()
+    const token = cookieStore.get('token')
 
-  if (!token) return null
+    if (!token) return null
 
-  const { email } = jwt.verify(token.value, process.env.SECRET) as JwtPayload
+    const { email } = jwt.verify(token.value, process.env.SECRET) as JwtPayload
 
-  if (!email) return null
+    if (!email) return null
 
-  const user = await prisma.users.findUnique({
-    where: {
-      email,
-    },
-  })
+    const user = await prisma.users.findUnique({
+      where: {
+        email,
+      },
+    })
 
-  if (!user) return null
+    if (!user) return null
 
-  return user
+    return user
+  } catch (error) {
+    return null
+  }
 }
 
 export function isAuthenticated(ctx: GraphQLContext) {

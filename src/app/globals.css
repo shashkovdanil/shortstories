@@ -2,27 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: Noah;
-  src:
-    url('/fonts/Noah-Regular.woff2') format('woff2'),
-    url('/fonts/Noah-Regular.woff') format('woff');
-  font-weight: 400;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: Noah;
-  src:
-    url('/fonts/Noah-Bold.woff2') format('woff2'),
-    url('/fonts/Noah-Bold.woff') format('woff');
-  font-weight: 700;
-  font-display: swap;
+html {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 html,
 body {
-  @apply h-full;
+  @apply h-full font-sans antialiased;
+}
 
-  font-family: Noah, system-ui;
+button {
+  @apply transition-all focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-2 focus-visible:ring-brand/40;
 }

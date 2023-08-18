@@ -240,7 +240,7 @@ export const mutations: UsersMutations = {
     }
 
     const token = jwt.sign({ email }, process.env.SECRET, {
-      expiresIn: '1h',
+      expiresIn: '1y',
     })
 
     await sendMail({

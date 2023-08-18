@@ -10,8 +10,8 @@ function MainStories({ error, fetchMore, loading, me, stories }) {
   if (error) return <ErrorMessage error={error} />
   if (!stories?.edges?.length)
     return (
-      <div>
-        <h2 className={styles['no-stories']}>Нет рассказов :(</h2>
+      <div className="mx-auto max-w-5xl px-6">
+        <h2 className={styles['no-stories']}>No stories yet :(</h2>
       </div>
     )
   return <ListStories {...stories} fetchMore={fetchMore} me={me} />

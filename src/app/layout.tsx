@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
 
 import { ApolloWrapper } from '@/services/ApolloWrapper'
-import '@/styles/base.css'
 import { cookies } from 'next/headers'
 
 import './globals.css'
+import 'remixicon/fonts/remixicon.css'
 
 export const metadata: Metadata = {
   description:
@@ -26,7 +26,6 @@ export default function RootLayout({
         <div className="grid min-h-full grid-rows-[auto_1fr_auto]">
           <ApolloWrapper token={token}>{children}</ApolloWrapper>
         </div>
-        <div id="modal" />
       </body>
     </html>
   )

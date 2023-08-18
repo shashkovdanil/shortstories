@@ -2,7 +2,9 @@
 
 import type { PropsWithChildren } from 'react'
 
+import * as fragments from '@/graphql/fragments'
 import { ApolloLink, HttpLink } from '@apollo/client'
+import { createFragmentRegistry } from '@apollo/client/cache'
 import {
   ApolloNextAppProvider,
   NextSSRApolloClient,
@@ -20,7 +22,9 @@ const makeClient = (token: string) => () => {
   })
 
   return new NextSSRApolloClient({
-    cache: new NextSSRInMemoryCache(),
+    cache: new NextSSRInMemoryCache({
+      fragments: createFragmentRegistry(...Object.values(fragments)),
+    }),
     connectToDevTools: true,
     link:
       typeof window === 'undefined'

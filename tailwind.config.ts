@@ -1,5 +1,7 @@
 import type { Config } from 'tailwindcss'
 
+import colors from 'tailwindcss/colors'
+
 const config: Config = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -9,6 +11,12 @@ const config: Config = {
   ],
   plugins: [],
   theme: {
+    colors: {
+      ...colors,
+      background: 'oklch(98.7% 0.007 246.71)',
+      black: 'oklch(20.59% 0.091 260.03/ <alpha-value>)',
+      brand: 'oklch(64.4% 0.211 289 / <alpha-value>)',
+    },
     extend: {
       animation: {
         'reverse-spin':

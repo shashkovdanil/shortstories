@@ -137,3 +137,15 @@ export const CHECK_LOGGED_IN_QUERY = gql(/* GraphQL */ `
     }
   }
 `)
+
+export const HOME_PAGE_QUERY = gql(/* GraphQL */ `
+  query HOME_PAGE_QUERY($offset: Int = 0, $limit: Int = 8) {
+    me {
+      ...me
+    }
+
+    stories(offset: $offset, limit: $limit) {
+      ...stories
+    }
+  }
+`)

@@ -7,7 +7,7 @@ import styles from './styles/header.module.css'
 
 function Header() {
   return (
-    <header className="flex items-center bg-slate-100 py-4">
+    <header className="flex items-center bg-background py-4">
       <div className={styles.bar}>
         <div className={styles.logo}>
           <Link href="/">

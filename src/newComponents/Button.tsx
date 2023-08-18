@@ -23,7 +23,7 @@ type Props = {
   full?: boolean
   loading?: boolean
   loadingLabel?: string
-} & Exclude<Attributes, 'className' | 'style'>
+} & Omit<Attributes, 'className' | 'style'>
 
 type LoadingAttributes = Pick<
   Attributes,
@@ -92,7 +92,7 @@ export const Button = forwardRef<HTMLButtonElement, PropsWithChildren<Props>>(
       <>
         <button
           className={cn(
-            'flex select-none justify-center gap-3 overflow-hidden text-ellipsis whitespace-nowrap rounded bg-slate-800 px-3 py-2 text-base text-white transition-all hover:bg-purple-600 focus-visible:outline-none focus-visible:ring-4 active:scale-[0.99] disabled:pointer-events-none disabled:opacity-60',
+            'flex select-none justify-center gap-3 overflow-hidden text-ellipsis whitespace-nowrap rounded bg-black px-3 py-2 text-base font-medium text-white transition-all hover:bg-brand focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/40 focus-visible:ring-offset-2 active:scale-[0.99] disabled:pointer-events-none disabled:opacity-60',
             {
               'w-full': full,
             },

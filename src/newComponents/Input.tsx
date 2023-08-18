@@ -16,7 +16,7 @@ type Props = {
   id: string
   label: string
   validation?: Validation
-} & Exclude<Attributes, 'className' | 'id' | 'style'>
+} & Omit<Attributes, 'className' | 'id' | 'style'>
 
 type ErrorInputAttributes = Pick<
   Attributes,
@@ -49,7 +49,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
           {label}
         </label>
         <input
-          className="w-full rounded border-2 border-solid border-gray-300 px-3 py-2 text-base transition-[border] focus-visible:border-purple-600 focus-visible:outline-none"
+          className="w-full rounded border-2 border-solid border-gray-300 px-3 py-2 text-base transition-[border] focus-visible:border-brand focus-visible:outline-none"
           id={id}
           ref={ref}
           {...errorAttributes}
