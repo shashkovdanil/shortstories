@@ -8,12 +8,13 @@ import type {
 } from '@/shared/types/StoriesProps'
 
 import { Button } from '@/newComponents/Button'
+import { StoryCard } from '@/newComponents/StoryCard'
 import { LIMIT_STORIES_PER_PAGE } from '@/shared/const'
 import {
   useBackgroundQuery,
   useReadQuery,
 } from '@apollo/experimental-nextjs-app-support/ssr'
-import { useCallback, useTransition } from 'react'
+import { useTransition } from 'react'
 
 export function ClientStories<Q extends QueriesWithStories>({
   query,
@@ -56,9 +57,7 @@ export function ClientStories<Q extends QueriesWithStories>({
   return (
     <>
       {edges.slice(LIMIT_STORIES_PER_PAGE).map(story => (
-        <div key={story.id}>
-          {story.title} {story.id}
-        </div>
+        <StoryCard key={story.id} {...story} />
       ))}
       {count === pageInfo.limit + pageInfo.offset && (
         <div className="mt-5 flex justify-center">

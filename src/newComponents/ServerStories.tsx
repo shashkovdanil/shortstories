@@ -7,6 +7,7 @@ import type {
   StoriesProps,
 } from '@/shared/types/StoriesProps'
 
+import { StoryCard } from '@/newComponents/StoryCard'
 import { Title } from '@/newComponents/Title'
 import { getClient } from '@/services/client'
 
@@ -29,9 +30,5 @@ export async function ServerStories<Q extends QueriesWithStories>({
     )
   }
 
-  return stories.edges.map(story => (
-    <div key={story.id}>
-      {story.title} {story.id}
-    </div>
-  ))
+  return stories.edges.map(story => <StoryCard key={story.id} {...story} />)
 }
