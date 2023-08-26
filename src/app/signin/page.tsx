@@ -1,6 +1,5 @@
 'use client'
 
-import { CenterWrapper } from '@/components'
 import SigninForm from '@/components/signin-form'
 import { useSearchParams } from 'next/navigation'
 

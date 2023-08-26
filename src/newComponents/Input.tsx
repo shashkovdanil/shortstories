@@ -3,6 +3,8 @@ import type { DetailedHTMLProps, InputHTMLAttributes } from 'react'
 import cn from 'classnames'
 import { forwardRef, useMemo } from 'react'
 
+import { ValidationError } from './ValidationError'
+
 type Attributes = DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,
   HTMLInputElement
@@ -56,9 +58,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
           {...rest}
         />
         {validation?.error && (
-          <div className="absolute mt-1 text-sm/none text-red-600" id={errorId}>
-            {validation.error}
-          </div>
+          <ValidationError id={errorId}>{validation.error}</ValidationError>
         )}
       </div>
     )

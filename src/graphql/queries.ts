@@ -149,3 +149,15 @@ export const HOME_PAGE_QUERY = gql(/* GraphQL */ `
     }
   }
 `)
+
+export const CREATE_STORY_QUERY = gql(/* GraphQL */ `
+  query CREATE_STORY_QUERY {
+    me {
+      ...me
+    }
+    genres {
+      id
+      name
+    }
+  }
+`)

@@ -13,7 +13,6 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "\n  query HOME_PAGE_QUERY($offset: Int = 0, $limit: Int = 8) {\n    me {\n      ...me\n    }\n\n    stories(offset: $offset, limit: $limit) {\n      ...stories\n    }\n  }\n": types.Home_Page_QueryDocument,
     "\n  fragment me on Me {\n    id\n    username\n    email\n    isVerified\n    photo\n    info\n  }\n": types.MeFragmentDoc,
     "\n  fragment user on User {\n    id\n    username\n    photo\n    info\n  }\n": types.UserFragmentDoc,
     "\n  fragment story on Story {\n    id\n    title\n    body\n    length\n    genre {\n      id\n      name\n    }\n    user {\n      ...user\n    }\n    stats {\n      likes {\n        id\n      }\n      dislikes {\n        id\n      }\n      views {\n        id\n      }\n      comments\n    }\n    createdAt\n  }\n": types.StoryFragmentDoc,
@@ -48,6 +47,8 @@ const documents = {
     "\n  query STORY_QUERY($id: Int!) {\n    me {\n      ...me\n    }\n\n    story(id: $id) {\n      ...story\n    }\n\n    comments(storyId: $id) {\n      ...comment\n    }\n  }\n": types.Story_QueryDocument,
     "\n  query GENRES_QUERY {\n    genres {\n      id\n      name\n    }\n  }\n": types.Genres_QueryDocument,
     "\n  query CHECK_LOGGED_IN_QUERY {\n    me {\n      ...me\n    }\n  }\n": types.Check_Logged_In_QueryDocument,
+    "\n  query HOME_PAGE_QUERY($offset: Int = 0, $limit: Int = 8) {\n    me {\n      ...me\n    }\n\n    stories(offset: $offset, limit: $limit) {\n      ...stories\n    }\n  }\n": types.Home_Page_QueryDocument,
+    "\n  query CREATE_STORY_QUERY {\n    me {\n      ...me\n    }\n    genres {\n      id\n      name\n    }\n  }\n": types.Create_Story_QueryDocument,
 };
 
 /**
@@ -64,10 +65,6 @@ const documents = {
  */
 export function gql(source: string): unknown;
 
-/**
- * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function gql(source: "\n  query HOME_PAGE_QUERY($offset: Int = 0, $limit: Int = 8) {\n    me {\n      ...me\n    }\n\n    stories(offset: $offset, limit: $limit) {\n      ...stories\n    }\n  }\n"): (typeof documents)["\n  query HOME_PAGE_QUERY($offset: Int = 0, $limit: Int = 8) {\n    me {\n      ...me\n    }\n\n    stories(offset: $offset, limit: $limit) {\n      ...stories\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -204,6 +201,14 @@ export function gql(source: "\n  query GENRES_QUERY {\n    genres {\n      id\n 
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  query CHECK_LOGGED_IN_QUERY {\n    me {\n      ...me\n    }\n  }\n"): (typeof documents)["\n  query CHECK_LOGGED_IN_QUERY {\n    me {\n      ...me\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query HOME_PAGE_QUERY($offset: Int = 0, $limit: Int = 8) {\n    me {\n      ...me\n    }\n\n    stories(offset: $offset, limit: $limit) {\n      ...stories\n    }\n  }\n"): (typeof documents)["\n  query HOME_PAGE_QUERY($offset: Int = 0, $limit: Int = 8) {\n    me {\n      ...me\n    }\n\n    stories(offset: $offset, limit: $limit) {\n      ...stories\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query CREATE_STORY_QUERY {\n    me {\n      ...me\n    }\n    genres {\n      id\n      name\n    }\n  }\n"): (typeof documents)["\n  query CREATE_STORY_QUERY {\n    me {\n      ...me\n    }\n    genres {\n      id\n      name\n    }\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};
