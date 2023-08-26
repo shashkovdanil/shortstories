@@ -25,7 +25,7 @@ export default function Nav() {
             {isLoggedIn && (
               <>
                 <li>
-                  <Link className={styles.write} href="/create-story">
+                  <Link className={styles.write} href="/story-editor">
                     Написать рассказ&nbsp;
                     <span aria-label="emoji" role="img">
                       ✍️
@@ -58,7 +58,7 @@ export default function Nav() {
       <nav className={styles.nav}>
         {isLoggedIn && (
           <>
-            <Link className={styles.write} href="/create-story">
+            <Link className={styles.write} href="/story-editor">
               Написать рассказ&nbsp;
               <span aria-label="emoji" role="img">
                 ✍️

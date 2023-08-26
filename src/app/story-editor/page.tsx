@@ -6,7 +6,7 @@ import { Form } from './_components/Form'
 
 export default async function StoryEditor() {
   const {
-    data: { genres, me },
+    data: { me },
   } = await getClient().query({
     query: CREATE_STORY_QUERY,
   })
@@ -15,5 +15,5 @@ export default async function StoryEditor() {
     redirect('/signin')
   }
 
-  return <Form genres={genres} meId={me.id} />
+  return <Form />
 }

@@ -52,7 +52,7 @@ export function Navigation() {
           <nav className="grid h-full w-full place-items-center">
             <ul className="flex flex-col gap-3 text-center">
               <li>
-                <Link href="/create-story">
+                <Link href="/story-editor">
                   Write Story&nbsp;
                   <span aria-label="emoji" role="img">
                     ✍️
@@ -78,7 +78,7 @@ export function Navigation() {
         </Modal>
       </div>
       <nav className="hidden items-center justify-end gap-6 md:flex">
-        <Link href="/create-story">
+        <Link href="/story-editor">
           Write Story&nbsp;
           <span aria-label="emoji" role="img">
             ✍️

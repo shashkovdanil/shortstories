@@ -12,11 +12,11 @@ export function Hero() {
           </Title>
           <p className="text-balance">
             Discover new authors or{' '}
-            <Link href="/create-story">showcase your talent</Link>
+            <Link href="/story-editor">showcase your talent</Link>
           </p>
         </div>
         <div className="hidden items-center justify-center md:flex">
-          <Link aria-label="Go to Write Story page" href="/create-story">
+          <Link aria-label="Go to Write Story page" href="/story-editor">
             <Image
               alt="Write Story"
               height={100}

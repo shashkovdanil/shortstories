@@ -16,7 +16,7 @@ export default async function EditStoryPage({
   })
 
   if (!me) {
-    redirect('/signin?return=create-story')
+    redirect('/signin?return=story-editor')
   }
 
   const { data } = await getClient().query({

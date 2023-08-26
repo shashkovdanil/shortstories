@@ -12,7 +12,7 @@ export default async function CreateStoryPage() {
   })
 
   if (!me) {
-    redirect('/signin?return=create-story')
+    redirect('/signin?return=story-editor')
   }
 
   const cookieStore = cookies()

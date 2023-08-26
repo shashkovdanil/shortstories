@@ -17,7 +17,7 @@ export default function StoryEditorLayout({ children }) {
   return (
     <>
       <Header />
-      <main className="mx-auto w-full max-w-3xl">{children}</main>
+      <main className="mx-auto w-full max-w-3xl px-6">{children}</main>
       <Footer />
     </>
   )

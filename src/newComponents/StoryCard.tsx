@@ -50,11 +50,13 @@ export function StoryCard({
         <div className="mb-2">
           <Title level={2}>{title}</Title>
         </div>
-        {body
-          .split('\n')
-          .map((paragraph, index) =>
-            paragraph ? <p key={index}>{paragraph}</p> : null,
-          )}
+        {body.split('\n').map((paragraph, index) =>
+          paragraph ? (
+            <p className="mb-2" key={index}>
+              {paragraph}
+            </p>
+          ) : null,
+        )}
         <div className="absolute bottom-0 left-0 right-0 bg-[linear-gradient(_hsla(0,0%,100%,0),hsla(0,0%,100%,0.95),#fff_)] pl-5 pr-5 pt-16">
           <div className="mb-5 flex justify-end gap-4">
             <div className="flex flex-col items-center justify-center">

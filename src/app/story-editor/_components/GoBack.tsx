@@ -12,7 +12,7 @@ export function GoBack() {
         back()
       }}
       aria-label="Go back"
-      className="flex h-12 w-12 items-center justify-center"
+      className="flex h-12 w-12 items-center justify-start"
       type="button"
     >
       <Icon name="ri-arrow-left-line" />

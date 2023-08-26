@@ -2,7 +2,7 @@ import Head from 'next/head'
 import { usePathname } from 'next/navigation'
 import React from 'react'
 
-const pageWithCustomMeta = ['/story', '/create-story']
+const pageWithCustomMeta = ['/story', '/story-editor']
 
 const title =
   'Shortstories - читать рассказы авторов из народа или написать рассказ и стать лучшим автором'
